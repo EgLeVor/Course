@@ -12,6 +12,12 @@ cur = None
 role = None
 login = None
 
+def patrick_pavviaz_protection(goverment: str):
+    FACE = ("--", ";", "\\", "/", "||", "chr(")
+    if any(el in goverment for el in FACE):
+        return ""
+    return goverment
+
 class ClientRegistration(QDialog, ClientRegistrationWindow.Ui_RegistrationWindow):
     def __init__(self):
         super().__init__()
@@ -40,6 +46,7 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
         window.exec()
 
     def registration(self, lgn, pwd, phone, full_name, passport, drv_lic, old_window):
+        any()
         connection = psycopg2.connect(
             host="localhost", 
             database="CarsharingDB",
@@ -49,8 +56,8 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
         connection.set_client_encoding("WIN1251")
         cur = connection.cursor()
         try:
-            cur.execute(f"INSERT INTO clients (lgn, pwd, drv_lic, passport, full_name, phone) VALUES ('{lgn}', '{pwd}', '{drv_lic}', '{passport}', '{full_name}', '{phone}')")
-            cur.execute(f"CREATE USER \"{lgn}\" WITH ENCRYPTED PASSWORD '{pwd}' IN GROUP \"Client\"")
+            cur.execute(patrick_pavviaz_protection(f"INSERT INTO clients (lgn, pwd, drv_lic, passport, full_name, phone) VALUES ('{lgn}', '{pwd}', '{drv_lic}', '{passport}', '{full_name}', '{phone}')"))
+            cur.execute(patrick_pavviaz_protection(f"CREATE USER \"{lgn}\" WITH ENCRYPTED PASSWORD '{pwd}' IN GROUP \"Client\""))
             reject = QMessageBox()
             reject.setWindowTitle("Сообщение")
             reject.setText("Пользователь успешно зарегистрирован!")
