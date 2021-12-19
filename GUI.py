@@ -100,7 +100,7 @@ class Client(QDialog, ClientWindow.Ui_Dialog):
     def create_trip_window(self):
         global cur, connection, login
         self.trip_window = Trip()
-        cur.execute("SELECT code FROM orders")
+        cur.execute("SELECT code FROM orders ORDER BY date_time DESC")
         for el in cur.fetchall():
             self.trip_window.comboBox.addItem(str(el[0]))
         self.trip_window.tableWidget.setColumnCount(5)
@@ -156,7 +156,28 @@ class Client(QDialog, ClientWindow.Ui_Dialog):
         self.trip_window.comboBox.currentTextChanged.connect(self.refresh_trip_table)
         self.trip_window.end_btn.clicked.connect(lambda:self.end_trip(self.trip_window.comboBox.currentText()))
         self.trip_window.pay_btn.clicked.connect(lambda:self.pay_trip(self.trip_window.comboBox.currentText()))
+        self.trip_window.load_btn.clicked.connect(lambda:self.load_data(self.trip_window.comboBox.currentText()))
         self.trip_window.exec()
+
+    def load_data(self, code):
+        global cur, connection, login
+        cur.execute(f"SELECT status FROM trips WHERE code={code}")
+        for el in cur.fetchall():
+            status = el[0]
+        if status == True:
+            cur.execute(f"call statistics_upload({code})")
+            connection.commit()
+            reject = QMessageBox()
+            reject.setWindowTitle("Сообщение")
+            reject.setText("Квитанция выгружена на ваше устройство!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            reject = QMessageBox()
+            reject.setWindowTitle("Сообщение")
+            reject.setText("Поездка не оплачена!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
 
     def pay_trip(self, code):
         global cur, connection, login
@@ -340,6 +361,7 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             if available == "[(True,)]":
                 print("Успешно!")
                 main_window = Client()
+                connection.commit()
                 main_window.exec()
             else:
                 print("Вы заблокированы!")
