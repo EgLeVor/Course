@@ -1,11 +1,11 @@
-import sys
+import sys, random
 
 import psycopg2
 
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow,QWidget,QPushButton,QLineEdit,QInputDialog,QFormLayout,QMessageBox, QDialogButtonBox)
 
-import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow
+import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow
 
 connection = None
 cur = None
@@ -13,10 +13,16 @@ role = None
 login = None
 
 def patrick_pavviaz_protection(goverment: str):
-    FACE = ("--", ";", "\\", "/", "||", "chr(")
+    FACE = ("--", "'", ";", "\\", "/", "||", "chr(")
     if any(el in goverment for el in FACE):
-        return ""
+        return ''
     return goverment
+
+class ClientOrder(QDialog, ClientOrderWindow.Ui_ClientOrderWindow):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
 
 class Trip(QDialog, TripWindow.Ui_Dialog):
     def __init__(self):
@@ -41,8 +47,19 @@ class Client(QDialog, ClientWindow.Ui_Dialog):
             for i in range(self.tableWidget.columnCount()):
                 self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
             tablerow += 1
+        cur.execute("SELECT full_name FROM clients")
+        for el in cur.fetchall():
+            self.name_line.setText(str(el[0]))
+        cur.execute("SELECT phone FROM clients")
+        for el in cur.fetchall():
+            self.phone_line.setText(str(el[0]))
+        cur.execute("SELECT passport FROM clients")
+        for el in cur.fetchall():
+            self.passport_line.setText(str(el[0]))
         self.comboBox.currentTextChanged.connect(self.refresh_table)
         self.trip_info_btn.clicked.connect(self.create_trip_window)
+        self.insert_btn.clicked.connect(self.create_order_window)
+        self.update_btn.clicked.connect(lambda:self.update_client(self.name_line.text(), self.phone_line.text(), self.passport_line.text()))
 
     def refresh_trip_table(self, table):
         global cur, connection, login
@@ -96,6 +113,72 @@ class Client(QDialog, ClientWindow.Ui_Dialog):
         self.trip_window.tableWidget.resizeColumnToContents(2)
         self.trip_window.tableWidget.resizeColumnToContents(3)
         self.trip_window.tableWidget.resizeColumnToContents(4)
+
+    def update_client(self, full_name, phone, passport):
+        global cur, connection, login
+        if patrick_pavviaz_protection(full_name) == '' or patrick_pavviaz_protection(phone) == '' or patrick_pavviaz_protection(passport) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            try:
+                cur.execute(f"UPDATE clients SET full_name = '{full_name}';")
+                cur.execute(f"UPDATE clients SET phone = '{phone}';")
+                cur.execute(f"UPDATE clients SET passport = '{passport}';")
+                connection.commit()
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Данные успешно обновлены!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            except Exception as ex:
+                reject = QMessageBox()
+                reject.setWindowTitle("Ошибка")
+                reject.setText("Проверьте введённые данные!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            finally:
+                connection.commit()
+
+
+    def create_order_window(self):
+        global cur, connection, login
+        window = ClientOrder()
+        cur.execute("SELECT car_id FROM cars WHERE available=true ORDER BY car_id ASC")
+        for el in cur.fetchall():
+            window.car_box.addItem(str(el[0]))
+        window.confirm_btn.clicked.connect(lambda:self.create_order(window.car_box.currentText(), window.descr_line.text(), window))
+        window.exec()
+
+    def create_order(self, car_id, descripion, window):
+        global cur, connection, login
+        if patrick_pavviaz_protection(descripion) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            check = False
+            code = random.randint(100000, 999999)
+            while not check:
+                try:
+                    cur.execute("rollback")
+                    cur.execute(f"begin; insert into orders (code, car_id, description) values ({code}, {car_id}, '{descripion}'); insert into trips (code) values ({code}); commit;")
+                    check = True
+                    connection.commit()
+                except Exception as ex:
+                    print("Double!")
+                finally:
+                    connection.commit()
+            reject = QMessageBox()
+            reject.setWindowTitle("Сообщение")
+            reject.setText("Заказ успешно создан")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+            window.close()
 
     def create_trip_window(self):
         global cur, connection, login
@@ -311,7 +394,7 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
         if patrick_pavviaz_protection(lgn) == '' or patrick_pavviaz_protection(pwd) == '' or patrick_pavviaz_protection(phone) == '' or patrick_pavviaz_protection(full_name) == '' or patrick_pavviaz_protection(passport) == '' or patrick_pavviaz_protection(drv_lic) == '':
             reject = QMessageBox()
             reject.setWindowTitle("Ошибка")
-            reject.setText("Одна или несколько строк пустые!")
+            reject.setText("Проверьте введённые данные!")
             reject.setStandardButtons(QMessageBox.Ok)
             reject.exec_()
         else:
