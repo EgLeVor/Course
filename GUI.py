@@ -5,7 +5,7 @@ import psycopg2
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow,QWidget,QPushButton,QLineEdit,QInputDialog,QFormLayout,QMessageBox, QDialogButtonBox)
 
-import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow
+import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow, ClientInformationWindow
 
 connection = None
 cur = None
@@ -18,11 +18,20 @@ def patrick_pavviaz_protection(goverment: str):
         return ''
     return goverment
 
+class ClientInformation(QDialog, ClientInformationWindow.Ui_Dialog):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
+
 class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
     def __init__(self):
         global cur, connection, login
         super().__init__()
         self.setupUi(self)
+        self.cars()
+        self.suppliers()
+        self.workshops()
         cur.execute("SELECT full_name FROM tech_users")
         for el in cur.fetchall():
             self.name_line.setText(str(el[0]))
@@ -33,6 +42,433 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
         for el in cur.fetchall():
             self.email_line.setText(str(el[0]))
         self.update_btn.clicked.connect(lambda:self.update_techuser(self.name_line.text(), self.phone_line.text(), self.email_line.text()))
+        self.supp_contr_box.currentTextChanged.connect(self.refresh_table)
+        self.work_serv_box.currentTextChanged.connect(self.refresh_table)
+        self.cars_update_btn.clicked.connect(self.refresh_car_table)
+        self.clients_viol_btn.clicked.connect(self.create_client_information_window)
+
+    def create_client_information_window(self):
+        global cur, connection, login
+        self.client_window = ClientInformation()
+        self.clients()
+        self.violations()
+        self.client_window.update_tbl_btn.clicked.connect(self.refresh_clients_violations_table)
+        cur.execute("SELECT lgn FROM clients ORDER BY lgn DESC")
+        for el in cur.fetchall():
+            self.client_window.lgn_box.addItem(str(el[0]))
+        self.client_window.update_viol_btn.clicked.connect(lambda:self.update_violations(self.client_window.lgn_box.currentText(), self.client_window.cnt_line.text()))
+        self.client_window.exec()
+
+    def update_violations(self, lgn, cnt):
+        global cur, connection, login
+        cur.execute(f"SELECT drv_lic FROM clients WHERE lgn='{lgn}'")
+        for el in cur.fetchall():
+            drv_lic = el[0]
+        cur.execute(f"SELECT cnt FROM violations WHERE drv_lic={drv_lic}")
+        for el in cur.fetchall():
+            check_cnt = el[0]
+        if patrick_pavviaz_protection(cnt) == '' or int(check_cnt) >= int(cnt):
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            cur.execute(f"UPDATE violations SET cnt={cnt} WHERE drv_lic={drv_lic}")
+            connection.commit()
+            reject = QMessageBox()
+            reject.setWindowTitle("Сообщение")
+            reject.setText("Успешно!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+
+    def refresh_clients_violations_table(self):
+        self.violations()
+        self.clients()
+
+    def refresh_car_table(self):
+        self.cars()
+
+    def refresh_table(self, table):
+        if table == "Поставщики":
+            self.suppliers()
+        elif table == "Контракты":
+            self.contracts()
+        elif table == "Мастерские":
+            self.workshops()
+        elif table == "Тех. обслуживание":
+            self.technical_users()
+
+    def violations(self):
+        global cur, connection, login
+        self.client_window.violations_tbl.setColumnCount(2)
+        self.client_window.violations_tbl.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.violations_tbl.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.violations_tbl.setHorizontalHeaderItem(1, item)
+        item = self.client_window.violations_tbl.horizontalHeaderItem(0)
+        item.setText("Номер водительских прав")
+        item = self.client_window.violations_tbl.horizontalHeaderItem(1)
+        item.setText("Количество нарушений")
+        cur.execute("SELECT * FROM violations ORDER BY cnt ASC")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.client_window.violations_tbl.rowCount()
+            self.client_window.violations_tbl.insertRow(rowPosition)
+            for i in range(self.client_window.violations_tbl.columnCount()):
+                self.client_window.violations_tbl.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.client_window.violations_tbl.resizeColumnToContents(0)
+        self.client_window.violations_tbl.resizeColumnToContents(1)
+
+    def clients(self):
+        global cur, connection, login
+        self.client_window.clients_tbl.setColumnCount(6)
+        self.client_window.clients_tbl.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.clients_tbl.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.clients_tbl.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.clients_tbl.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.clients_tbl.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.clients_tbl.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.client_window.clients_tbl.setHorizontalHeaderItem(5, item)
+        item = self.client_window.clients_tbl.horizontalHeaderItem(0)
+        item.setText("ФИО")
+        item = self.client_window.clients_tbl.horizontalHeaderItem(1)
+        item.setText("Логин")
+        item = self.client_window.clients_tbl.horizontalHeaderItem(2)
+        item.setText("Имеет ли доступ")
+        item = self.client_window.clients_tbl.horizontalHeaderItem(3)
+        item.setText("Номер водительских прав")
+        item = self.client_window.clients_tbl.horizontalHeaderItem(4)
+        item.setText("Паспорт")
+        item = self.client_window.clients_tbl.horizontalHeaderItem(5)
+        item.setText("Телефон")
+        cur.execute("SELECT full_name, lgn, available, drv_lic, passport, phone FROM clients ORDER BY lgn ASC")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.client_window.clients_tbl.rowCount()
+            self.client_window.clients_tbl.insertRow(rowPosition)
+            for i in range(self.client_window.clients_tbl.columnCount()):
+                self.client_window.clients_tbl.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.client_window.clients_tbl.resizeColumnToContents(0)
+        self.client_window.clients_tbl.resizeColumnToContents(1)
+        self.client_window.clients_tbl.resizeColumnToContents(2)
+        self.client_window.clients_tbl.resizeColumnToContents(3)
+        self.client_window.clients_tbl.resizeColumnToContents(4)
+        self.client_window.clients_tbl.resizeColumnToContents(5)
+
+    def technical_users(self):
+        global cur, connection, login
+        self.work_serv_tbl.setColumnCount(8)
+        self.work_serv_tbl.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(7, item)
+        item = self.work_serv_tbl.horizontalHeaderItem(0)
+        item.setText("ИД задания")
+        item = self.work_serv_tbl.horizontalHeaderItem(1)
+        item.setText("ИД автомастерской")
+        item = self.work_serv_tbl.horizontalHeaderItem(2)
+        item.setText("Номер машины")
+        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item.setText("Задание")
+        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item.setText("Стоимость")
+        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item.setText("Дата начала")
+        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item.setText("Дата конца")
+        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item.setText("Статус")
+        cur.execute("SELECT * FROM technical_service ORDER BY task_id ASC")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.work_serv_tbl.rowCount()
+            self.work_serv_tbl.insertRow(rowPosition)
+            for i in range(self.work_serv_tbl.columnCount()):
+                self.work_serv_tbl.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.work_serv_tbl.resizeColumnToContents(0)
+        self.work_serv_tbl.resizeColumnToContents(1)
+        self.work_serv_tbl.resizeColumnToContents(2)
+        self.work_serv_tbl.resizeColumnToContents(3)
+        self.work_serv_tbl.resizeColumnToContents(4)
+        self.work_serv_tbl.resizeColumnToContents(5)
+        self.work_serv_tbl.resizeColumnToContents(6)
+        self.work_serv_tbl.resizeColumnToContents(7)
+
+    def contracts(self):
+        global cur, connection, login
+        self.supp_contr_tbl.setColumnCount(5)
+        self.supp_contr_tbl.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(4, item)
+        item = self.supp_contr_tbl.horizontalHeaderItem(0)
+        item.setText("ИД контракта")
+        item = self.supp_contr_tbl.horizontalHeaderItem(1)
+        item.setText("Номер машины")
+        item = self.supp_contr_tbl.horizontalHeaderItem(2)
+        item.setText("ИД поставщика")
+        item = self.supp_contr_tbl.horizontalHeaderItem(3)
+        item.setText("Стоимость")
+        item = self.supp_contr_tbl.horizontalHeaderItem(4)
+        item.setText("Дата покупки")
+        cur.execute("SELECT * FROM contracts ORDER BY contract_id ASC")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.supp_contr_tbl.rowCount()
+            self.supp_contr_tbl.insertRow(rowPosition)
+            for i in range(self.supp_contr_tbl.columnCount()):
+                self.supp_contr_tbl.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.supp_contr_tbl.resizeColumnToContents(0)
+        self.supp_contr_tbl.resizeColumnToContents(1)
+        self.supp_contr_tbl.resizeColumnToContents(2)
+        self.supp_contr_tbl.resizeColumnToContents(3)
+        self.supp_contr_tbl.resizeColumnToContents(4)
+
+    def workshops(self):
+        global cur, connection, login
+        self.work_serv_tbl.setColumnCount(4)
+        self.work_serv_tbl.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.work_serv_tbl.setHorizontalHeaderItem(3, item)
+        item = self.work_serv_tbl.horizontalHeaderItem(0)
+        item.setText("ИД автомастерской")
+        item = self.work_serv_tbl.horizontalHeaderItem(1)
+        item.setText("Email")
+        item = self.work_serv_tbl.horizontalHeaderItem(2)
+        item.setText("Телефон")
+        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item.setText("Факс")
+        cur.execute("SELECT * FROM workshops ORDER BY workshop_id ASC")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.work_serv_tbl.rowCount()
+            self.work_serv_tbl.insertRow(rowPosition)
+            for i in range(self.work_serv_tbl.columnCount()):
+                self.work_serv_tbl.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.work_serv_tbl.resizeColumnToContents(0)
+        self.work_serv_tbl.resizeColumnToContents(1)
+        self.work_serv_tbl.resizeColumnToContents(2)
+        self.work_serv_tbl.resizeColumnToContents(3)
+
+    def suppliers(self):
+        global cur, connection, login
+        self.supp_contr_tbl.setColumnCount(4)
+        self.supp_contr_tbl.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.supp_contr_tbl.setHorizontalHeaderItem(3, item)
+        item = self.supp_contr_tbl.horizontalHeaderItem(0)
+        item.setText("ИД поставщика")
+        item = self.supp_contr_tbl.horizontalHeaderItem(1)
+        item.setText("Email")
+        item = self.supp_contr_tbl.horizontalHeaderItem(2)
+        item.setText("Телефон")
+        item = self.supp_contr_tbl.horizontalHeaderItem(3)
+        item.setText("Факс")
+        cur.execute("SELECT * FROM suppliers ORDER BY supplier_id ASC")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.supp_contr_tbl.rowCount()
+            self.supp_contr_tbl.insertRow(rowPosition)
+            for i in range(self.supp_contr_tbl.columnCount()):
+                self.supp_contr_tbl.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.supp_contr_tbl.resizeColumnToContents(0)
+        self.supp_contr_tbl.resizeColumnToContents(1)
+        self.supp_contr_tbl.resizeColumnToContents(2)
+        self.supp_contr_tbl.resizeColumnToContents(3)
+
+    def cars(self):
+        global cur, connection, login
+        self.cars_tbl.setColumnCount(6)
+        self.cars_tbl.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.cars_tbl.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.cars_tbl.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.cars_tbl.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.cars_tbl.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.cars_tbl.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.cars_tbl.setHorizontalHeaderItem(5, item)
+        item = self.cars_tbl.horizontalHeaderItem(0)
+        item.setText("Номер машины")
+        item = self.cars_tbl.horizontalHeaderItem(1)
+        item.setText("ИД поставщиков")
+        item = self.cars_tbl.horizontalHeaderItem(2)
+        item.setText("Доступность")
+        item = self.cars_tbl.horizontalHeaderItem(3)
+        item.setText("Местонахождение")
+        item = self.cars_tbl.horizontalHeaderItem(4)
+        item.setText("Марка")
+        item = self.cars_tbl.horizontalHeaderItem(5)
+        item.setText("Пробег (в километрах)")
+        cur.execute("SELECT * FROM cars ORDER BY car_id ASC")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.cars_tbl.rowCount()
+            self.cars_tbl.insertRow(rowPosition)
+            for i in range(self.cars_tbl.columnCount()):
+                self.cars_tbl.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.cars_tbl.resizeColumnToContents(0)
+        self.cars_tbl.resizeColumnToContents(1)
+        self.cars_tbl.resizeColumnToContents(2)
+        self.cars_tbl.resizeColumnToContents(3)
+        self.cars_tbl.resizeColumnToContents(4)
+        self.cars_tbl.resizeColumnToContents(5)
 
     def update_techuser(self, full_name, phone, email):
         global cur, connection, login
@@ -61,6 +497,7 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
                 reject.exec_()
             finally:
                 connection.commit()
+
 class ClientOrder(QDialog, ClientOrderWindow.Ui_ClientOrderWindow):
     def __init__(self):
         global cur, connection, login
@@ -80,16 +517,16 @@ class Client(QMainWindow, ClientWindow.Ui_MainWindow):
         self.setupUi(self)
         cur.execute("SELECT code, car_id, date_time, description FROM orders")
         tablerow = 0
-        self.tableWidget.resizeColumnToContents(0)
-        self.tableWidget.resizeColumnToContents(1)
-        self.tableWidget.resizeColumnToContents(2)
-        self.tableWidget.resizeColumnToContents(3)
         for row in cur.fetchall():
             rowPosition = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowPosition)
             for i in range(self.tableWidget.columnCount()):
                 self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
             tablerow += 1
+        self.tableWidget.resizeColumnToContents(0)
+        self.tableWidget.resizeColumnToContents(1)
+        self.tableWidget.resizeColumnToContents(2)
+        self.tableWidget.resizeColumnToContents(3)
         cur.execute("SELECT full_name FROM clients")
         for el in cur.fetchall():
             self.name_line.setText(str(el[0]))
@@ -103,6 +540,59 @@ class Client(QMainWindow, ClientWindow.Ui_MainWindow):
         self.trip_info_btn.clicked.connect(self.create_trip_window)
         self.insert_btn.clicked.connect(self.create_order_window)
         self.update_btn.clicked.connect(lambda:self.update_client(self.name_line.text(), self.phone_line.text(), self.passport_line.text()))
+        self.find_btn.clicked.connect(lambda:self.find_brand(self.brand_line.text()))
+
+    def find_brand(self, part_brand):
+        global cur, connection, login
+        if patrick_pavviaz_protection(part_brand) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            self.tableWidget.setColumnCount(4)
+            self.tableWidget.setRowCount(0)
+            item = QtWidgets.QTableWidgetItem()
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            item.setFont(font)
+            self.tableWidget.setHorizontalHeaderItem(0, item)
+            item = QtWidgets.QTableWidgetItem()
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            item.setFont(font)
+            self.tableWidget.setHorizontalHeaderItem(1, item)
+            item = QtWidgets.QTableWidgetItem()
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            item.setFont(font)
+            self.tableWidget.setHorizontalHeaderItem(2, item)
+            item = QtWidgets.QTableWidgetItem()
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            item.setFont(font)
+            self.tableWidget.setHorizontalHeaderItem(3, item)
+            item = self.tableWidget.horizontalHeaderItem(0)
+            item.setText("Номер машины")
+            item = self.tableWidget.horizontalHeaderItem(1)
+            item.setText("Местонахождение машины")
+            item = self.tableWidget.horizontalHeaderItem(2)
+            item.setText("Марка машины")
+            item = self.tableWidget.horizontalHeaderItem(3)
+            item.setText("Пробег (в километрах)")
+            data = cur.execute(f"select * from get_car_by_part_brand('{part_brand}')")
+            tablerow = 0
+            self.tableWidget.resizeColumnToContents(0)
+            self.tableWidget.resizeColumnToContents(1)
+            self.tableWidget.resizeColumnToContents(2)
+            self.tableWidget.resizeColumnToContents(3)
+            for row in cur.fetchall():
+                rowPosition = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(rowPosition)
+                for i in range(self.tableWidget.columnCount()):
+                    self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                tablerow += 1
 
     def refresh_trip_table(self, table):
         global cur, connection, login
@@ -346,7 +836,7 @@ class Client(QMainWindow, ClientWindow.Ui_MainWindow):
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText("Марка машины")
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText("Пробег к километрах")
+        item.setText("Пробег (в километрах)")
         cur.execute("SELECT car_id, loc, brand, mileage FROM cars WHERE available=true ORDER BY car_id ASC")
         tablerow = 0
         self.tableWidget.resizeColumnToContents(0)
@@ -482,8 +972,10 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             database="CarsharingDB",
             # user = lgn,
             # password = pwd
-            user="Johand",
-            password="5T7BRYYMSO"
+            # user="Johand",
+            # password="5T7BRYYMSO"
+            user="Qwardley",
+            password="SHH389ZCA4"
             )
             connection.set_client_encoding("WIN1251")
             cur = connection.cursor()

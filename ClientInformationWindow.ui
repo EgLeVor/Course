@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1191</width>
+    <height>543</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Информация о клиентах</string>
+  </property>
+  <widget class="QTableWidget" name="clients_tbl">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>45</y>
+     <width>911</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>ФИО</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Логин</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Имеет ли доступ</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Номер водительских прав</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Паспорт</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Телефон</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>15</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Клиенты</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>260</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Нарушения клиентов</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="violations_tbl">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>295</y>
+     <width>911</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Номер водительских прав</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Количество нарушений</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QPushButton" name="update_tbl_btn">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>50</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Обновить таблицы</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="update_viol_btn">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>360</y>
+     <width>211</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Изменить кол-во нарушений</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="lgn_box">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>300</y>
+     <width>81</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>300</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Логин клиента</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="cnt_line">
+   <property name="geometry">
+    <rect>
+     <x>1110</x>
+     <y>330</y>
+     <width>51</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>330</y>
+     <width>151</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Кол-во нарушений</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
