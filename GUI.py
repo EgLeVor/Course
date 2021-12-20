@@ -5,7 +5,7 @@ import psycopg2
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow,QWidget,QPushButton,QLineEdit,QInputDialog,QFormLayout,QMessageBox, QDialogButtonBox)
 
-import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow
+import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow
 
 connection = None
 cur = None
@@ -18,6 +18,49 @@ def patrick_pavviaz_protection(goverment: str):
         return ''
     return goverment
 
+class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
+        cur.execute("SELECT full_name FROM tech_users")
+        for el in cur.fetchall():
+            self.name_line.setText(str(el[0]))
+        cur.execute("SELECT phone FROM tech_users")
+        for el in cur.fetchall():
+            self.phone_line.setText(str(el[0]))
+        cur.execute("SELECT email FROM tech_users")
+        for el in cur.fetchall():
+            self.email_line.setText(str(el[0]))
+        self.update_btn.clicked.connect(lambda:self.update_techuser(self.name_line.text(), self.phone_line.text(), self.email_line.text()))
+
+    def update_techuser(self, full_name, phone, email):
+        global cur, connection, login
+        if patrick_pavviaz_protection(full_name) == '' or patrick_pavviaz_protection(phone) == '' or patrick_pavviaz_protection(email) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            try:
+                cur.execute(f"UPDATE tech_users SET full_name = '{full_name}';")
+                cur.execute(f"UPDATE tech_users SET phone = '{phone}';")
+                cur.execute(f"UPDATE tech_users SET email = '{email}';")
+                connection.commit()
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Данные успешно обновлены!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            except Exception as ex:
+                reject = QMessageBox()
+                reject.setWindowTitle("Ошибка")
+                reject.setText("Проверьте введённые данные!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            finally:
+                connection.commit()
 class ClientOrder(QDialog, ClientOrderWindow.Ui_ClientOrderWindow):
     def __init__(self):
         global cur, connection, login
@@ -30,7 +73,7 @@ class Trip(QDialog, TripWindow.Ui_Dialog):
         super().__init__()
         self.setupUi(self)
 
-class Client(QDialog, ClientWindow.Ui_Dialog):
+class Client(QMainWindow, ClientWindow.Ui_MainWindow):
     def __init__(self):
         global cur, connection, login
         super().__init__()
@@ -141,7 +184,6 @@ class Client(QDialog, ClientWindow.Ui_Dialog):
                 reject.exec_()
             finally:
                 connection.commit()
-
 
     def create_order_window(self):
         global cur, connection, login
@@ -274,94 +316,100 @@ class Client(QDialog, ClientWindow.Ui_Dialog):
         connection.commit()
         self.refresh_trip_table(code)
 
+    def cars(self):
+        self.tableWidget.setColumnCount(4)
+        self.tableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(3, item)
+        item = self.tableWidget.horizontalHeaderItem(0)
+        item.setText("Номер машины")
+        item = self.tableWidget.horizontalHeaderItem(1)
+        item.setText("Местонахождение машины")
+        item = self.tableWidget.horizontalHeaderItem(2)
+        item.setText("Марка машины")
+        item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText("Пробег к километрах")
+        cur.execute("SELECT car_id, loc, brand, mileage FROM cars WHERE available=true ORDER BY car_id ASC")
+        tablerow = 0
+        self.tableWidget.resizeColumnToContents(0)
+        self.tableWidget.resizeColumnToContents(1)
+        self.tableWidget.resizeColumnToContents(2)
+        self.tableWidget.resizeColumnToContents(3)
+        for row in cur.fetchall():
+            rowPosition = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(rowPosition)
+            for i in range(self.tableWidget.columnCount()):
+                self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+
+    def orders(self):
+        self.tableWidget.setColumnCount(4)
+        self.tableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(3, item)
+        item = self.tableWidget.horizontalHeaderItem(0)
+        item.setText("Код поездки")
+        item = self.tableWidget.horizontalHeaderItem(1)
+        item.setText("Номер машины")
+        item = self.tableWidget.horizontalHeaderItem(2)
+        item.setText("Дата и время создания заказа")
+        item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText("Описание цели заказа")
+        cur.execute("SELECT code, car_id, date_time, description FROM orders ORDER BY date_time ASC")
+        tablerow = 0
+        self.tableWidget.resizeColumnToContents(0)
+        self.tableWidget.resizeColumnToContents(1)
+        self.tableWidget.resizeColumnToContents(2)
+        self.tableWidget.resizeColumnToContents(3)
+        for row in cur.fetchall():
+            rowPosition = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(rowPosition)
+            for i in range(self.tableWidget.columnCount()):
+                self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+
     def refresh_table(self, table):
         global cur, connection, login
         if table == "Машины":
-            self.tableWidget.setColumnCount(4)
-            self.tableWidget.setRowCount(0)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(0, item)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(1, item)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(2, item)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(3, item)
-            item = self.tableWidget.horizontalHeaderItem(0)
-            item.setText("Номер машины")
-            item = self.tableWidget.horizontalHeaderItem(1)
-            item.setText("Местонахождение машины")
-            item = self.tableWidget.horizontalHeaderItem(2)
-            item.setText("Марка машины")
-            item = self.tableWidget.horizontalHeaderItem(3)
-            item.setText("Пробег к километрах")
-            cur.execute("SELECT car_id, loc, brand, mileage FROM cars WHERE available=true ORDER BY car_id ASC")
-            tablerow = 0
-            self.tableWidget.resizeColumnToContents(0)
-            self.tableWidget.resizeColumnToContents(1)
-            self.tableWidget.resizeColumnToContents(2)
-            self.tableWidget.resizeColumnToContents(3)
-            for row in cur.fetchall():
-                rowPosition = self.tableWidget.rowCount()
-                self.tableWidget.insertRow(rowPosition)
-                for i in range(self.tableWidget.columnCount()):
-                    self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
-                tablerow += 1
+            self.cars()
         elif table == "Заказы":
-            self.tableWidget.setColumnCount(4)
-            self.tableWidget.setRowCount(0)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(0, item)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(1, item)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(2, item)
-            item = QtWidgets.QTableWidgetItem()
-            font = QtGui.QFont()
-            font.setPointSize(10)
-            item.setFont(font)
-            self.tableWidget.setHorizontalHeaderItem(3, item)
-            item = self.tableWidget.horizontalHeaderItem(0)
-            item.setText("Код поездки")
-            item = self.tableWidget.horizontalHeaderItem(1)
-            item.setText("Номер машины")
-            item = self.tableWidget.horizontalHeaderItem(2)
-            item.setText("Дата и время создания заказа")
-            item = self.tableWidget.horizontalHeaderItem(3)
-            item.setText("Описание цели заказа")
-            cur.execute("SELECT code, car_id, date_time, description FROM orders ORDER BY date_time ASC")
-            tablerow = 0
-            self.tableWidget.resizeColumnToContents(0)
-            self.tableWidget.resizeColumnToContents(1)
-            self.tableWidget.resizeColumnToContents(2)
-            self.tableWidget.resizeColumnToContents(3)
-            for row in cur.fetchall():
-                rowPosition = self.tableWidget.rowCount()
-                self.tableWidget.insertRow(rowPosition)
-                for i in range(self.tableWidget.columnCount()):
-                    self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
-                tablerow += 1
+            self.orders()
 
 class ClientRegistration(QDialog, ClientRegistrationWindow.Ui_RegistrationWindow):
     def __init__(self):
@@ -428,76 +476,25 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
 
     def login(self, lgn, pwd):
         global cur, connection, login
-        connection = psycopg2.connect(
-        host="localhost", 
-        database="CarsharingDB",
-        user="Qwardley",
-        password="SHH389ZCA4"
-        )
-        connection.set_client_encoding("WIN1251")
-        cur = connection.cursor()
-        self.role()
-        if role=="Client":
+        try:
+            connection = psycopg2.connect(
+            host="localhost", 
+            database="CarsharingDB",
+            # user = lgn,
+            # password = pwd
+            user="Johand",
+            password="5T7BRYYMSO"
+            )
+            connection.set_client_encoding("WIN1251")
+            cur = connection.cursor()
             connection.commit()
-            cur.execute(f"select available from clients")
-            available = str(cur.fetchall())
-            if available == "[(True,)]":
-                print("Успешно!")
-                main_window = Client()
-                connection.commit()
-                main_window.exec()
-            else:
-                print("Вы заблокированы!")
-                reject = QMessageBox()
-                reject.setWindowTitle("Ошибка")
-                reject.setText("Вы заблокированы!")
-                reject.setStandardButtons(QMessageBox.Ok)
-                reject.exec_()
-                print("Роль установлена!")
-        elif role == "TechUser":
-            connection.commit()
-            print("Роль установлена!")
-        elif role == "postgres":
-            connection.commit()
-            print("Роль установлена!")
-        # try:
-        #     connection = psycopg2.connect(
-        #     host="localhost", 
-        #     database="CarsharingDB",
-        #     user="Qwardley",
-        #     password="SHH389ZCA4"
-        #     )
-        #     connection.set_client_encoding("WIN1251")
-        #     cur = connection.cursor()
-        #     self.role()
-        #     if role=="Client":
-        #         connection.commit()
-        #         cur.execute(f"select available from clients")
-        #         available = str(cur.fetchall())
-        #         if available == "[(True,)]":
-        #             print("Успешно!")
-        #             main_window = Client()
-        #             main_window.exec()
-        #         else:
-        #             print("Вы заблокированы!")
-        #             reject = QMessageBox()
-        #             reject.setWindowTitle("Ошибка")
-        #             reject.setText("Вы заблокированы!")
-        #             reject.setStandardButtons(QMessageBox.Ok)
-        #             reject.exec_()
-        #         print("Роль установлена!")
-        #     elif role == "TechUser":
-        #         connection.commit()
-        #         print("Роль установлена!")
-        #     elif role == "postgres":
-        #         connection.commit()
-        #         print("Роль установлена!")
-        # except Exception as ex:
-        #     reject = QMessageBox()
-        #     reject.setWindowTitle("Ошибка")
-        #     reject.setText("Неправильный логин или пароль!")
-        #     reject.setStandardButtons(QMessageBox.Ok)
-        #     reject.exec_()
+            self.close()
+        except Exception as ex:
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Неправильный логин или пароль!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
 
     def role(self):
         global role, cur, connection
@@ -514,3 +511,29 @@ app = QtWidgets.QApplication(sys.argv)
 window = Login()
 window.show()    
 app.exec_()
+window.role()
+if role=="Client":
+    connection.commit()
+    cur.execute(f"select available from clients")
+    available = str(cur.fetchall())
+    if available == "[(True,)]":
+        print("Успешно!")
+        main_window = Client()
+        main_window.show()
+        app.exec_()
+    else:
+        print("Вы заблокированы!")
+        reject = QMessageBox()
+        reject.setWindowTitle("Ошибка")
+        reject.setText("Вы заблокированы!")
+        reject.setStandardButtons(QMessageBox.Ok)
+        reject.exec_()
+        print("Роль установлена!")
+elif role == "TechUser":
+    main_window = TechUser()
+    main_window.show()
+    app.exec_()
+    print("Роль установлена!")
+elif role == "postgres":
+    connection.commit()
+    print("Роль установлена!")
