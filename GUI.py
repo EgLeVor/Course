@@ -5,7 +5,7 @@ import psycopg2
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow,QWidget,QPushButton,QLineEdit,QInputDialog,QFormLayout,QMessageBox, QDialogButtonBox)
 
-import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow, ClientInformationWindow
+import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow, ClientInformationWindow, ReceiptWindow, WorkshopWindow, SupplierWindow, CarWindow, TechnicalServiceWindow
 
 connection = None
 cur = None
@@ -17,6 +17,36 @@ def patrick_pavviaz_protection(goverment: str):
     if any(el in goverment for el in FACE):
         return ''
     return goverment
+
+class TechnicalService(QDialog, TechnicalServiceWindow.Ui_Dialog):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
+
+class Car(QDialog, CarWindow.Ui_Dialog):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
+
+class Supplier(QDialog, SupplierWindow.Ui_Dialog):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
+
+class Workshop(QDialog, WorkshopWindow.Ui_Dialog):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
+
+class Receipt(QDialog, ReceiptWindow.Ui_Dialog):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
 
 class ClientInformation(QDialog, ClientInformationWindow.Ui_Dialog):
     def __init__(self):
@@ -46,6 +76,249 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
         self.work_serv_box.currentTextChanged.connect(self.refresh_table)
         self.cars_update_btn.clicked.connect(self.refresh_car_table)
         self.clients_viol_btn.clicked.connect(self.create_client_information_window)
+        self.orders_trips_btn.clicked.connect(self.create_receipt_window)
+        self.workshop_btn.clicked.connect(self.create_workshop_window)
+        self.supplier_btn.clicked.connect(self.create_supplier_window)
+        self.car_contract_btn.clicked.connect(self.create_car_window)
+        self.tech_service_btn.clicked.connect(self.create_technical_service_window)
+        cur.execute("SELECT car_id FROM technical_service WHERE status=false")
+        for el in cur.fetchall():
+            self.tech_car_box.addItem(str(el[0]))
+        self.finish_btn.clicked.connect(lambda:self.finish(self.tech_car_box.currentText()))
+        connection.commit()
+
+    def finish(self, car_id):
+        global cur, connection, login
+        cur.execute(f"UPDATE technical_service SET status=true WHERE car_id={car_id}")
+        connection.commit()
+
+    def create_technical_service_window(self):
+        global cur, connection, login
+        window = TechnicalService()
+        cur.execute("SELECT workshop_id FROM workshops ORDER BY workshop_id ASC")
+        for el in cur.fetchall():
+            window.workshop_box.addItem(str(el[0]))
+        connection.commit()
+        cur.execute("SELECT car_id FROM cars WHERE available=true ORDER BY car_id ASC")
+        for el in cur.fetchall():
+            window.car_box.addItem(str(el[0]))
+        connection.commit()
+        window.add_btn.clicked.connect(lambda:self.add_technical_service(window.car_box.currentText(), window.workshop_box.currentText(), window.desc_line.text(), window.cost_line.text(), window.date_line.text(), window))
+        window.exec()
+
+    def add_technical_service(self, car_id, workshop_id, objective, cost, start_task, window):
+        global cur, connection, login
+        if patrick_pavviaz_protection(objective) == '' or patrick_pavviaz_protection(cost) == '' or patrick_pavviaz_protection(start_task) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            try:
+                cur.execute(f"INSERT INTO technical_service (workshop_id, car_id, objective, \"cost\", start_task) VALUES ({workshop_id}, {car_id}, '{objective}', {cost}, '{start_task}')")
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Успешно!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+                connection.commit()
+                window.close()
+            except Exception as ex:
+                reject = QMessageBox()
+                reject.setWindowTitle("Ошибка")
+                reject.setText("Проверьте введённые данные!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            finally:
+                connection.commit()
+
+    def create_car_window(self):
+        global cur, connection, login
+        window = Car()
+        cur.execute("SELECT supplier_id FROM suppliers ORDER BY supplier_id ASC")
+        for el in cur.fetchall():
+            window.supplier_box.addItem(str(el[0]))
+        window.add_btn.clicked.connect(lambda:self.create_car(window.brand_line.text(), window.mileage_line.text(), window.loc_line.text(), window.cost_line.text(), window.buy_date_line.text(), window.supplier_box.currentText(), window))
+        window.exec()
+
+    def create_car(self, brand, mileage, loc, cost, buy_date, supplier_id, window):
+        global cur, connection, login
+        if patrick_pavviaz_protection(brand) == '' or patrick_pavviaz_protection(mileage) == '' or patrick_pavviaz_protection(loc) == '' or patrick_pavviaz_protection(cost) == '' or patrick_pavviaz_protection(buy_date) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            try:
+                cur.execute(f"INSERT INTO cars (supplier_id, loc, brand, mileage) values ({supplier_id}, '{loc}', '{brand}', {mileage}) returning car_id")
+                for el in cur.fetchall():
+                    car_id = el[0]
+                connection.commit()
+                cur.execute(f"INSERT INTO contracts (car_id, supplier_id, \"cost\", buy_date) VALUES ({car_id}, {supplier_id}, {cost}, '{buy_date}')")
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Успешно!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+                connection.commit()
+                window.close()
+            except Exception as ex:
+                reject = QMessageBox()
+                reject.setWindowTitle("Ошибка")
+                reject.setText("Проверьте введённые данные!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            finally:
+                connection.commit()
+
+
+    def create_supplier(self, email, phone, fax, window):
+        global cur, connection, login
+        if patrick_pavviaz_protection(email) == '' or patrick_pavviaz_protection(phone) == '' or patrick_pavviaz_protection(fax) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            try:
+                cur.execute(f"INSERT INTO suppliers (email, phone, fax) VALUES ('{email}', {phone}, {fax})")
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Успешно!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+                connection.commit()
+                window.close()
+            except Exception as ex:
+                reject = QMessageBox()
+                reject.setWindowTitle("Ошибка")
+                reject.setText("Проверьте введённые данные!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            finally:
+                connection.commit()
+
+    def create_workshop(self, email, phone, fax, window):
+        global cur, connection, login
+        if patrick_pavviaz_protection(email) == '' or patrick_pavviaz_protection(phone) == '' or patrick_pavviaz_protection(fax) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            try:
+                cur.execute(f"INSERT INTO workshops (email, phone, fax) VALUES ('{email}', {phone}, {fax})")
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Успешно!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+                connection.commit()
+                window.close()
+            except Exception as ex:
+                reject = QMessageBox()
+                reject.setWindowTitle("Ошибка")
+                reject.setText("Проверьте введённые данные!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            finally:
+                connection.commit()
+
+    def create_supplier_window(self):
+        window = Supplier()
+        window.add_button.clicked.connect(lambda:self.create_supplier(window.mail_line.text(), window.phone_line.text(), window.fax_line.text(), window))
+        window.exec()
+
+    def create_workshop_window(self):
+        window = Workshop()
+        window.add_button.clicked.connect(lambda:self.create_workshop(window.mail_line.text(), window.phone_line.text(), window.fax_line.text(), window))
+        window.exec()
+
+    def create_receipt_window(self):
+        self.receipt_window = Receipt()
+        self.receipt()
+        self.receipt_window.exec()
+
+    def receipt(self):
+        global cur, connection, login
+        self.receipt_window.tableWidget.setColumnCount(8)
+        self.receipt_window.tableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(7, item)
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(0)
+        item.setText("Код")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(1)
+        item.setText("Логин")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(2)
+        item.setText("Номер машины")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(3)
+        item.setText("Описание")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(4)
+        item.setText("Начало поездки")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(5)
+        item.setText("Конец поездки")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(6)
+        item.setText("Стоимость")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(7)
+        item.setText("Статус")
+        cur.execute("select code1, lgn, car_id, description, start_trip, end_trip, \"cost\", status from receipt")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.receipt_window.tableWidget.rowCount()
+            self.receipt_window.tableWidget.insertRow(rowPosition)
+            for i in range(self.receipt_window.tableWidget.columnCount()):
+                self.receipt_window.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.receipt_window.tableWidget.resizeColumnToContents(0)
+        self.receipt_window.tableWidget.resizeColumnToContents(1)
+        self.receipt_window.tableWidget.resizeColumnToContents(2)
+        self.receipt_window.tableWidget.resizeColumnToContents(3)
+        self.receipt_window.tableWidget.resizeColumnToContents(4)
+        self.receipt_window.tableWidget.resizeColumnToContents(5)
+        self.receipt_window.tableWidget.resizeColumnToContents(6)
+        self.receipt_window.tableWidget.resizeColumnToContents(7)
 
     def create_client_information_window(self):
         global cur, connection, login
@@ -97,7 +370,7 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
         elif table == "Мастерские":
             self.workshops()
         elif table == "Тех. обслуживание":
-            self.technical_users()
+            self.technical_service()
 
     def violations(self):
         global cur, connection, login
@@ -189,7 +462,7 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
         self.client_window.clients_tbl.resizeColumnToContents(4)
         self.client_window.clients_tbl.resizeColumnToContents(5)
 
-    def technical_users(self):
+    def technical_service(self):
         global cur, connection, login
         self.work_serv_tbl.setColumnCount(8)
         self.work_serv_tbl.setRowCount(0)
@@ -241,13 +514,13 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
         item.setText("Номер машины")
         item = self.work_serv_tbl.horizontalHeaderItem(3)
         item.setText("Задание")
-        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item = self.work_serv_tbl.horizontalHeaderItem(4)
         item.setText("Стоимость")
-        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item = self.work_serv_tbl.horizontalHeaderItem(5)
         item.setText("Дата начала")
-        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item = self.work_serv_tbl.horizontalHeaderItem(6)
         item.setText("Дата конца")
-        item = self.work_serv_tbl.horizontalHeaderItem(3)
+        item = self.work_serv_tbl.horizontalHeaderItem(7)
         item.setText("Статус")
         cur.execute("SELECT * FROM technical_service ORDER BY task_id ASC")
         tablerow = 0
@@ -972,10 +1245,10 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             database="CarsharingDB",
             # user = lgn,
             # password = pwd
-            # user="Johand",
-            # password="5T7BRYYMSO"
-            user="Qwardley",
-            password="SHH389ZCA4"
+            user="Johand",
+            password="5T7BRYYMSO"
+            # user="Qwardley",
+            # password="SHH389ZCA4"
             )
             connection.set_client_encoding("WIN1251")
             cur = connection.cursor()
