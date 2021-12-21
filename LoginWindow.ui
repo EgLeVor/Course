@@ -7,11 +7,40 @@
     <x>0</x>
     <y>0</y>
     <width>401</width>
-    <height>300</height>
+    <height>359</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Вход</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton{
+	
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	background-color: rgb(170, 170, 255);
+	color: rgb(255, 255, 255);
+}
+QPushButton#exit_btn{
+	
+	background-color: rgb(209, 0, 0);
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	font-weight: bold
+
+}
+QDialog{
+
+	background-color: rgb(44, 44, 64);
+}
+QLabel{
+	
+	color: rgb(255, 255, 255);
+}
+QLineEdit{
+	
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+</string>
   </property>
   <widget class="QLabel" name="main_lbl">
    <property name="geometry">
@@ -91,8 +120,8 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>27</y>
-     <width>101</width>
+     <y>240</y>
+     <width>111</width>
      <height>41</height>
     </rect>
    </property>
@@ -103,9 +132,9 @@
   <widget class="QPushButton" name="lgn_btn">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>230</y>
-     <width>93</width>
+     <x>160</x>
+     <y>240</y>
+     <width>211</width>
      <height>41</height>
     </rect>
    </property>
@@ -116,9 +145,9 @@
   <widget class="QPushButton" name="exit_btn">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>230</y>
-     <width>231</width>
+     <x>30</x>
+     <y>300</y>
+     <width>341</width>
      <height>41</height>
     </rect>
    </property>
