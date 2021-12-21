@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1250</width>
-    <height>1120</height>
+    <width>1178</width>
+    <height>917</height>
    </rect>
   </property>
   <property name="font">
@@ -62,10 +62,13 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
-      <width>911</width>
-      <height>211</height>
+      <y>50</y>
+      <width>831</width>
+      <height>141</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <column>
      <property name="text">
@@ -198,9 +201,9 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>415</y>
-      <width>911</width>
-      <height>211</height>
+      <y>335</y>
+      <width>831</width>
+      <height>141</height>
      </rect>
     </property>
     <column>
@@ -291,8 +294,8 @@ QTableWidget{
    <widget class="QComboBox" name="supp_contr_box">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>370</y>
+      <x>540</x>
+      <y>290</y>
       <width>301</width>
       <height>31</height>
      </rect>
@@ -312,9 +315,9 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>770</y>
-      <width>911</width>
-      <height>211</height>
+      <y>620</y>
+      <width>831</width>
+      <height>141</height>
      </rect>
     </property>
     <column>
@@ -405,8 +408,8 @@ QTableWidget{
    <widget class="QComboBox" name="work_serv_box">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>720</y>
+      <x>540</x>
+      <y>570</y>
       <width>301</width>
       <height>31</height>
      </rect>
@@ -426,7 +429,7 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>300</y>
+      <y>220</y>
       <width>151</width>
       <height>41</height>
      </rect>
@@ -440,7 +443,7 @@ QTableWidget{
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>911</width>
+      <width>821</width>
       <height>21</height>
      </rect>
     </property>
@@ -457,8 +460,8 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>370</y>
-      <width>601</width>
+      <y>290</y>
+      <width>521</width>
       <height>21</height>
      </rect>
     </property>
@@ -475,8 +478,8 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>720</y>
-      <width>601</width>
+      <y>570</y>
+      <width>521</width>
       <height>21</height>
      </rect>
     </property>
@@ -493,8 +496,8 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>650</y>
-      <width>281</width>
+      <y>500</y>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
@@ -505,9 +508,9 @@ QTableWidget{
    <widget class="QPushButton" name="orders_trips_btn">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>650</y>
-      <width>291</width>
+      <x>310</x>
+      <y>500</y>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
@@ -518,9 +521,9 @@ QTableWidget{
    <widget class="QPushButton" name="workshop_btn">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>1010</y>
-      <width>281</width>
+      <x>580</x>
+      <y>790</y>
+      <width>261</width>
       <height>41</height>
      </rect>
     </property>
@@ -531,9 +534,9 @@ QTableWidget{
    <widget class="QPushButton" name="supplier_btn">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>650</y>
-      <width>281</width>
+      <x>610</x>
+      <y>500</y>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
@@ -544,9 +547,9 @@ QTableWidget{
    <widget class="QPushButton" name="car_contract_btn">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>300</y>
-      <width>281</width>
+      <x>580</x>
+      <y>220</y>
+      <width>261</width>
       <height>41</height>
      </rect>
     </property>
@@ -557,9 +560,9 @@ QTableWidget{
    <widget class="QPushButton" name="tech_service_btn">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>1010</y>
-      <width>281</width>
+      <x>300</x>
+      <y>790</y>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
@@ -571,8 +574,8 @@ QTableWidget{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>1010</y>
-      <width>271</width>
+      <y>790</y>
+      <width>251</width>
       <height>31</height>
      </rect>
     </property>
@@ -580,9 +583,9 @@ QTableWidget{
    <widget class="QPushButton" name="finish_btn">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>1060</y>
-      <width>281</width>
+      <x>300</x>
+      <y>850</y>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
@@ -593,7 +596,7 @@ QTableWidget{
    <widget class="QLineEdit" name="name_line">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>90</y>
       <width>281</width>
       <height>31</height>
@@ -603,7 +606,7 @@ QTableWidget{
    <widget class="QLabel" name="passport_lbl">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>220</y>
       <width>281</width>
       <height>21</height>
@@ -621,7 +624,7 @@ QTableWidget{
    <widget class="QLineEdit" name="phone_line">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>170</y>
       <width>281</width>
       <height>31</height>
@@ -631,7 +634,7 @@ QTableWidget{
    <widget class="QPushButton" name="update_btn">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>310</y>
       <width>281</width>
       <height>41</height>
@@ -644,7 +647,7 @@ QTableWidget{
    <widget class="QLabel" name="name_lbl">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>60</y>
       <width>281</width>
       <height>21</height>
@@ -662,7 +665,7 @@ QTableWidget{
    <widget class="QLabel" name="inf_lbl">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>10</y>
       <width>281</width>
       <height>31</height>
@@ -682,7 +685,7 @@ QTableWidget{
    <widget class="QLineEdit" name="email_line">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>250</y>
       <width>281</width>
       <height>31</height>
@@ -692,7 +695,7 @@ QTableWidget{
    <widget class="QLabel" name="phone_lbl">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>870</x>
       <y>140</y>
       <width>281</width>
       <height>21</height>

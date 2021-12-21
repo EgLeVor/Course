@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>772</width>
-    <height>422</height>
+    <width>789</width>
+    <height>431</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,7 +58,7 @@ QTableWidget{
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>751</width>
+      <width>761</width>
       <height>192</height>
      </rect>
     </property>
@@ -66,8 +66,8 @@ QTableWidget{
    <widget class="QPushButton" name="refresh_tbl">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>350</y>
+      <x>270</x>
+      <y>290</y>
       <width>241</width>
       <height>41</height>
      </rect>
@@ -92,7 +92,7 @@ QTableWidget{
    <widget class="QPushButton" name="delete_btn">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>270</x>
       <y>350</y>
       <width>241</width>
       <height>41</height>
@@ -105,7 +105,7 @@ QTableWidget{
    <widget class="QPushButton" name="update_btn">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>530</x>
       <y>290</y>
       <width>241</width>
       <height>41</height>
@@ -120,7 +120,7 @@ QTableWidget{
      <rect>
       <x>270</x>
       <y>230</y>
-      <width>231</width>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
@@ -128,7 +128,7 @@ QTableWidget{
    <widget class="QLineEdit" name="pwd_line">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>530</x>
       <y>230</y>
       <width>241</width>
       <height>31</height>
