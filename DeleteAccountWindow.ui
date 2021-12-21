@@ -6,12 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>344</width>
+    <width>348</width>
     <height>114</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Удаление аккаунта</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton{
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	background-color: rgb(170, 170, 255);
+	color: rgb(255, 255, 255);
+	font-weight: bold
+}
+QDialog{
+	background-color: rgb(44, 44, 64);
+}
+QLabel{
+	color: rgb(255, 255, 255);
+}
+</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -34,7 +49,7 @@
   <widget class="QPushButton" name="yes_btn">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>10</x>
      <y>60</y>
      <width>131</width>
      <height>41</height>
@@ -42,7 +57,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -52,7 +71,7 @@
   <widget class="QPushButton" name="no_btn">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>210</x>
      <y>60</y>
      <width>131</width>
      <height>41</height>
@@ -60,7 +79,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">

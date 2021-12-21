@@ -7,11 +7,50 @@
     <x>0</x>
     <y>0</y>
     <width>931</width>
-    <height>271</height>
+    <height>338</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Информация о поездке</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color: rgb(44, 44, 64);
+}
+QPushButton{
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	background-color: rgb(170, 170, 255);
+	color: rgb(255, 255, 255);
+	font-weight: bold
+}
+QPushButton#end_btn{
+	background-color: rgb(211, 47, 47);
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	font-weight: bold
+
+}
+QLabel{
+	
+	color: rgb(255, 255, 255);
+}
+QLineEdit{
+	border: 1px solid rgb(255, 255, 255);
+	border-top-color: rgba(255, 255, 255, 0);
+	border-right-color: rgba(255, 255, 255, 0);
+	border-left-color: rgba(255, 255, 255, 0);
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+QLabel#inf_lbl{
+	font-weight: bold
+}
+QComboBox{
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+QTableWidget{
+	color:rgb(255, 255, 255);
+}</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
@@ -26,9 +65,9 @@
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>190</y>
-     <width>73</width>
+     <x>222</x>
+     <y>210</y>
+     <width>101</width>
      <height>31</height>
     </rect>
    </property>
@@ -37,9 +76,9 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>190</y>
-     <width>211</width>
-     <height>21</height>
+     <y>210</y>
+     <width>191</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -54,15 +93,19 @@
   <widget class="QPushButton" name="end_btn">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>190</y>
+     <x>30</x>
+     <y>270</y>
      <width>171</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -73,14 +116,18 @@
    <property name="geometry">
     <rect>
      <x>760</x>
-     <y>190</y>
+     <y>270</y>
      <width>141</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -90,15 +137,19 @@
   <widget class="QPushButton" name="load_btn">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>230</y>
+     <x>320</x>
+     <y>270</y>
      <width>321</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">

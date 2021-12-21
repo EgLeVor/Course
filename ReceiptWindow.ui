@@ -7,11 +7,50 @@
     <x>0</x>
     <y>0</y>
     <width>1141</width>
-    <height>260</height>
+    <height>288</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Информация о заказах</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color: rgb(44, 44, 64);
+}
+QPushButton{
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	background-color: rgb(170, 170, 255);
+	color: rgb(255, 255, 255);
+	font-weight: bold
+}
+QPushButton#delete_btn{
+	background-color: rgb(211, 47, 47);
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	font-weight: bold
+
+}
+QLabel{
+	
+	color: rgb(255, 255, 255);
+}
+QLineEdit{
+	border: 1px solid rgb(255, 255, 255);
+	border-top-color: rgba(255, 255, 255, 0);
+	border-right-color: rgba(255, 255, 255, 0);
+	border-left-color: rgba(255, 255, 255, 0);
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+QLabel#inf_lbl{
+	font-weight: bold
+}
+QComboBox{
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+QTableWidget{
+	color:rgb(255, 255, 255);
+}</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
@@ -34,6 +73,22 @@
       <pointsize>10</pointsize>
      </font>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
@@ -43,6 +98,22 @@
      <font>
       <pointsize>10</pointsize>
      </font>
+    </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
     </property>
    </column>
    <column>
@@ -54,6 +125,22 @@
       <pointsize>10</pointsize>
      </font>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
@@ -64,34 +151,114 @@
       <pointsize>10</pointsize>
      </font>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
      <string>Начало поездки</string>
+    </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
     </property>
    </column>
    <column>
     <property name="text">
      <string>Конец поездки</string>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
      <string>Стоимость</string>
+    </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
     </property>
    </column>
    <column>
     <property name="text">
      <string>Статус</string>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
   </widget>
   <widget class="QPushButton" name="false_btn">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>210</y>
-     <width>181</width>
+     <x>10</x>
+     <y>230</y>
+     <width>231</width>
      <height>41</height>
     </rect>
    </property>
@@ -102,9 +269,9 @@
   <widget class="QPushButton" name="all_btn">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>210</y>
-     <width>181</width>
+     <x>900</x>
+     <y>230</y>
+     <width>231</width>
      <height>41</height>
     </rect>
    </property>
