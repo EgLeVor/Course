@@ -7,24 +7,54 @@
     <x>0</x>
     <y>0</y>
     <width>352</width>
-    <height>180</height>
+    <height>206</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Окно заказа</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color: rgb(44, 44, 64);
+}
+QPushButton{
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	background-color: rgb(170, 170, 255);
+	color: rgb(255, 255, 255);
+	font-weight: bold
+}
+QLabel{
+	color: rgb(255, 255, 255);
+}
+QLineEdit{
+	border: 1px solid rgb(255, 255, 255);
+	border-top-color: rgba(255, 255, 255, 0);
+	border-right-color: rgba(255, 255, 255, 0);
+	border-left-color: rgba(255, 255, 255, 0);
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+QComboBox{
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}</string>
+  </property>
   <widget class="QPushButton" name="confirm_btn">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>130</y>
-     <width>171</width>
-     <height>28</height>
+     <x>30</x>
+     <y>140</y>
+     <width>291</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -55,9 +85,9 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>30</y>
+     <y>40</y>
      <width>211</width>
-     <height>41</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">

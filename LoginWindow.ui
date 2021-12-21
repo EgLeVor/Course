@@ -15,29 +15,23 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton{
-	
 	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
 	background-color: rgb(170, 170, 255);
 	color: rgb(255, 255, 255);
 	font-weight: bold
 }
 QPushButton#exit_btn{
-	
-	background-color: rgb(209, 0, 0);
+	background-color: rgb(211, 47, 47);
 	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
 	font-weight: bold
-
 }
 QDialog{
-
 	background-color: rgb(44, 44, 64);
 }
 QLabel{
-	
 	color: rgb(255, 255, 255);
 }
 QLineEdit{
-	
 	background-color: rgb(50, 50, 64);
 	color: rgb(255, 255, 255);
 }
@@ -46,9 +40,9 @@ QLineEdit{
   <widget class="QLabel" name="main_lbl">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>30</x>
      <y>0</y>
-     <width>91</width>
+     <width>341</width>
      <height>81</height>
     </rect>
    </property>
@@ -60,13 +54,16 @@ QLineEdit{
    <property name="text">
     <string>Вход</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
   <widget class="QLabel" name="lgn_lbl">
    <property name="geometry">
     <rect>
      <x>30</x>
      <y>90</y>
-     <width>131</width>
+     <width>341</width>
      <height>16</height>
     </rect>
    </property>
@@ -94,7 +91,7 @@ QLineEdit{
     <rect>
      <x>30</x>
      <y>170</y>
-     <width>131</width>
+     <width>341</width>
      <height>16</height>
     </rect>
    </property>

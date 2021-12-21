@@ -6,12 +6,51 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1191</width>
-    <height>543</height>
+    <width>949</width>
+    <height>708</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Информация о клиентах</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color: rgb(44, 44, 64);
+}
+QPushButton{
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	background-color: rgb(170, 170, 255);
+	color: rgb(255, 255, 255);
+	font-weight: bold
+}
+QPushButton#delete_btn{
+	background-color: rgb(209, 0, 0);
+	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
+	font-weight: bold
+
+}
+QLabel{
+	
+	color: rgb(255, 255, 255);
+}
+QLineEdit{
+	border: 1px solid rgb(255, 255, 255);
+	border-top-color: rgba(255, 255, 255, 0);
+	border-right-color: rgba(255, 255, 255, 0);
+	border-left-color: rgba(255, 255, 255, 0);
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+QLabel#inf_lbl{
+	font-weight: bold
+}
+QComboBox{
+	background-color: rgb(50, 50, 64);
+	color: rgb(255, 255, 255);
+}
+QTableWidget{
+	color:rgb(255, 255, 255);
+}</string>
   </property>
   <widget class="QTableWidget" name="clients_tbl">
    <property name="geometry">
@@ -26,30 +65,126 @@
     <property name="text">
      <string>ФИО</string>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
      <string>Логин</string>
+    </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
     </property>
    </column>
    <column>
     <property name="text">
      <string>Имеет ли доступ</string>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
      <string>Номер водительских прав</string>
+    </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
     </property>
    </column>
    <column>
     <property name="text">
      <string>Паспорт</string>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
      <string>Телефон</string>
+    </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
     </property>
    </column>
   </widget>
@@ -58,13 +193,13 @@
     <rect>
      <x>20</x>
      <y>15</y>
-     <width>71</width>
+     <width>911</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -75,14 +210,16 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>260</y>
-     <width>201</width>
-     <height>31</height>
+     <y>280</y>
+     <width>911</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
@@ -93,7 +230,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>295</y>
+     <y>310</y>
      <width>911</width>
      <height>211</height>
     </rect>
@@ -102,18 +239,50 @@
     <property name="text">
      <string>Номер водительских прав</string>
     </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
    </column>
    <column>
     <property name="text">
      <string>Количество нарушений</string>
+    </property>
+    <property name="background">
+     <color>
+      <red>44</red>
+      <green>44</green>
+      <blue>64</blue>
+     </color>
+    </property>
+    <property name="foreground">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
     </property>
    </column>
   </widget>
   <widget class="QPushButton" name="update_tbl_btn">
    <property name="geometry">
     <rect>
-     <x>950</x>
-     <y>50</y>
+     <x>710</x>
+     <y>650</y>
      <width>221</width>
      <height>41</height>
     </rect>
@@ -125,9 +294,9 @@
   <widget class="QPushButton" name="update_viol_btn">
    <property name="geometry">
     <rect>
-     <x>950</x>
-     <y>360</y>
-     <width>211</width>
+     <x>20</x>
+     <y>650</y>
+     <width>231</width>
      <height>41</height>
     </rect>
    </property>
@@ -138,9 +307,9 @@
   <widget class="QComboBox" name="lgn_box">
    <property name="geometry">
     <rect>
-     <x>1080</x>
-     <y>300</y>
-     <width>81</width>
+     <x>140</x>
+     <y>560</y>
+     <width>111</width>
      <height>21</height>
     </rect>
    </property>
@@ -148,9 +317,9 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>950</x>
-     <y>300</y>
-     <width>121</width>
+     <x>20</x>
+     <y>560</y>
+     <width>111</width>
      <height>21</height>
     </rect>
    </property>
@@ -166,9 +335,9 @@
   <widget class="QLineEdit" name="cnt_line">
    <property name="geometry">
     <rect>
-     <x>1110</x>
-     <y>330</y>
-     <width>51</width>
+     <x>140</x>
+     <y>600</y>
+     <width>111</width>
      <height>22</height>
     </rect>
    </property>
@@ -176,9 +345,9 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>950</x>
-     <y>330</y>
-     <width>151</width>
+     <x>20</x>
+     <y>600</y>
+     <width>111</width>
      <height>21</height>
     </rect>
    </property>
