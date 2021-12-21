@@ -372,7 +372,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Добавить автомастерскую</string>
+     <string>Добавить/Удалить автомастерскую</string>
     </property>
    </widget>
    <widget class="QPushButton" name="supplier_btn">
@@ -385,7 +385,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Добавить поставщика</string>
+     <string>Добавить/Удалить поставщика</string>
     </property>
    </widget>
    <widget class="QPushButton" name="car_contract_btn">
@@ -398,7 +398,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Добавить машину (через контракт)</string>
+     <string>Добавить/Удалить машину</string>
     </property>
    </widget>
    <widget class="QPushButton" name="tech_service_btn">

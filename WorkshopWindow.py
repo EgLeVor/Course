@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(251, 230)
+        Dialog.resize(251, 285)
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 10, 181, 31))
         font = QtGui.QFont()
@@ -45,6 +45,12 @@ class Ui_Dialog(object):
         self.add_button = QtWidgets.QPushButton(Dialog)
         self.add_button.setGeometry(QtCore.QRect(70, 190, 101, 31))
         self.add_button.setObjectName("add_button")
+        self.delete_btn = QtWidgets.QPushButton(Dialog)
+        self.delete_btn.setGeometry(QtCore.QRect(30, 240, 111, 31))
+        self.delete_btn.setObjectName("delete_btn")
+        self.workshop_box = QtWidgets.QComboBox(Dialog)
+        self.workshop_box.setGeometry(QtCore.QRect(150, 240, 73, 31))
+        self.workshop_box.setObjectName("workshop_box")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -56,6 +62,7 @@ class Ui_Dialog(object):
         self.label_2.setText(_translate("Dialog", "Телефон"))
         self.label_3.setText(_translate("Dialog", "Факс"))
         self.add_button.setText(_translate("Dialog", "Добавить"))
+        self.delete_btn.setText(_translate("Dialog", "Удалить"))
 
 
 if __name__ == "__main__":

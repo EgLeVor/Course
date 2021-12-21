@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>251</width>
-    <height>230</height>
+    <height>285</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -108,6 +108,29 @@
    </property>
    <property name="text">
     <string>Добавить</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="supplier_box">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>240</y>
+     <width>73</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="delete_btn">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>240</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Удалить</string>
    </property>
   </widget>
  </widget>

@@ -5,7 +5,7 @@ import psycopg2
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow,QWidget,QPushButton,QLineEdit,QInputDialog,QFormLayout,QMessageBox, QDialogButtonBox)
 
-import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow, ClientInformationWindow, ReceiptWindow, WorkshopWindow, SupplierWindow, CarWindow, TechnicalServiceWindow
+import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow, ClientInformationWindow, ReceiptWindow, WorkshopWindow, SupplierWindow, CarWindow, TechnicalServiceWindow, DeleteAccountWindow
 
 connection = None
 cur = None
@@ -17,6 +17,12 @@ def patrick_pavviaz_protection(goverment: str):
     if any(el in goverment for el in FACE):
         return ''
     return goverment
+
+class DeleteAccount(QDialog, DeleteAccountWindow.Ui_Dialog):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
 
 class TechnicalService(QDialog, TechnicalServiceWindow.Ui_Dialog):
     def __init__(self):
@@ -81,15 +87,20 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
         self.supplier_btn.clicked.connect(self.create_supplier_window)
         self.car_contract_btn.clicked.connect(self.create_car_window)
         self.tech_service_btn.clicked.connect(self.create_technical_service_window)
+        self.finish_btn.clicked.connect(lambda:self.finish(self.tech_car_box.currentText()))
         cur.execute("SELECT car_id FROM technical_service WHERE status=false")
         for el in cur.fetchall():
             self.tech_car_box.addItem(str(el[0]))
-        self.finish_btn.clicked.connect(lambda:self.finish(self.tech_car_box.currentText()))
         connection.commit()
 
     def finish(self, car_id):
         global cur, connection, login
         cur.execute(f"UPDATE technical_service SET status=true WHERE car_id={car_id}")
+        connection.commit()
+        self.tech_car_box.clear()
+        cur.execute("SELECT car_id FROM technical_service WHERE status=false")
+        for el in cur.fetchall():
+            self.tech_car_box.addItem(str(el[0]))
         connection.commit()
 
     def create_technical_service_window(self):
@@ -123,6 +134,11 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
                 reject.setStandardButtons(QMessageBox.Ok)
                 reject.exec_()
                 connection.commit()
+                self.tech_car_box.clear()
+                cur.execute("SELECT car_id FROM technical_service WHERE status=false")
+                for el in cur.fetchall():
+                    self.tech_car_box.addItem(str(el[0]))
+                connection.commit()
                 window.close()
             except Exception as ex:
                 reject = QMessageBox()
@@ -139,8 +155,23 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
         cur.execute("SELECT supplier_id FROM suppliers ORDER BY supplier_id ASC")
         for el in cur.fetchall():
             window.supplier_box.addItem(str(el[0]))
+        cur.execute("SELECT car_id FROM cars ORDER BY car_id ASC")
+        for el in cur.fetchall():
+            window.car_box.addItem(str(el[0]))
+        window.delete_btn.clicked.connect(lambda:self.delete_car(window.car_box.currentText(), window))
         window.add_btn.clicked.connect(lambda:self.create_car(window.brand_line.text(), window.mileage_line.text(), window.loc_line.text(), window.cost_line.text(), window.buy_date_line.text(), window.supplier_box.currentText(), window))
         window.exec()
+
+    def delete_car(self, car_id, window):
+        global cur, connection, login
+        cur.execute(f"call delete_car_by_id({car_id})")
+        reject = QMessageBox()
+        reject.setWindowTitle("Сообщение")
+        reject.setText("Успешно!")
+        reject.setStandardButtons(QMessageBox.Ok)
+        reject.exec_()
+        window.close()
+        connection.commit()
 
     def create_car(self, brand, mileage, loc, cost, buy_date, supplier_id, window):
         global cur, connection, login
@@ -201,6 +232,7 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
             finally:
                 connection.commit()
 
+
     def create_workshop(self, email, phone, fax, window):
         global cur, connection, login
         if patrick_pavviaz_protection(email) == '' or patrick_pavviaz_protection(phone) == '' or patrick_pavviaz_protection(fax) == '':
@@ -227,98 +259,55 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
                 reject.exec_()
             finally:
                 connection.commit()
+    
+    def delete_supplier(self, supplier_id, window):
+        global cur, connection, login
+        cur.execute(f"DELETE FROM suppliers WHERE supplier_id={supplier_id}")
+        connection.commit()
+        reject = QMessageBox()
+        reject.setWindowTitle("Сообщение")
+        reject.setText("Успешно!")
+        reject.setStandardButtons(QMessageBox.Ok)
+        reject.exec_()
+        window.close()
+
+    def delete_workshop(self, workshop_id, window):
+        global cur, connection, login
+        cur.execute(f"DELETE FROM workshops WHERE workshop_id={workshop_id}")
+        connection.commit()
+        reject = QMessageBox()
+        reject.setWindowTitle("Сообщение")
+        reject.setText("Успешно!")
+        reject.setStandardButtons(QMessageBox.Ok)
+        reject.exec_()
+        window.close()
 
     def create_supplier_window(self):
+        global cur, connection, login
         window = Supplier()
+        cur.execute("SELECT supplier_id FROM suppliers ORDER BY supplier_id ASC")
+        for el in cur.fetchall():
+            window.supplier_box.addItem(str(el[0]))
+        window.delete_btn.clicked.connect(lambda:self.delete_supplier(window.supplier_box.currentText(), window))
         window.add_button.clicked.connect(lambda:self.create_supplier(window.mail_line.text(), window.phone_line.text(), window.fax_line.text(), window))
         window.exec()
 
     def create_workshop_window(self):
+        global cur, connection, login
         window = Workshop()
+        cur.execute("SELECT workshop_id FROM workshops ORDER BY workshop_id ASC")
+        for el in cur.fetchall():
+            window.workshop_box.addItem(str(el[0]))
+        window.delete_btn.clicked.connect(lambda:self.delete_workshop(window.workshop_box.currentText(), window))
         window.add_button.clicked.connect(lambda:self.create_workshop(window.mail_line.text(), window.phone_line.text(), window.fax_line.text(), window))
         window.exec()
 
     def create_receipt_window(self):
         self.receipt_window = Receipt()
         self.receipt()
+        self.receipt_window.all_btn.clicked.connect(self.receipt)
+        self.receipt_window.false_btn.clicked.connect(self.false_receipt)
         self.receipt_window.exec()
-
-    def receipt(self):
-        global cur, connection, login
-        self.receipt_window.tableWidget.setColumnCount(8)
-        self.receipt_window.tableWidget.setRowCount(0)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(4, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(5, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(6, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        item.setFont(font)
-        self.receipt_window.tableWidget.setHorizontalHeaderItem(7, item)
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(0)
-        item.setText("Код")
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(1)
-        item.setText("Логин")
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(2)
-        item.setText("Номер машины")
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(3)
-        item.setText("Описание")
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(4)
-        item.setText("Начало поездки")
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(5)
-        item.setText("Конец поездки")
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(6)
-        item.setText("Стоимость")
-        item = self.receipt_window.tableWidget.horizontalHeaderItem(7)
-        item.setText("Статус")
-        cur.execute("select code1, lgn, car_id, description, start_trip, end_trip, \"cost\", status from receipt")
-        tablerow = 0
-        for row in cur.fetchall():
-            rowPosition = self.receipt_window.tableWidget.rowCount()
-            self.receipt_window.tableWidget.insertRow(rowPosition)
-            for i in range(self.receipt_window.tableWidget.columnCount()):
-                self.receipt_window.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            tablerow += 1
-        self.receipt_window.tableWidget.resizeColumnToContents(0)
-        self.receipt_window.tableWidget.resizeColumnToContents(1)
-        self.receipt_window.tableWidget.resizeColumnToContents(2)
-        self.receipt_window.tableWidget.resizeColumnToContents(3)
-        self.receipt_window.tableWidget.resizeColumnToContents(4)
-        self.receipt_window.tableWidget.resizeColumnToContents(5)
-        self.receipt_window.tableWidget.resizeColumnToContents(6)
-        self.receipt_window.tableWidget.resizeColumnToContents(7)
 
     def create_client_information_window(self):
         global cur, connection, login
@@ -371,6 +360,176 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
             self.workshops()
         elif table == "Тех. обслуживание":
             self.technical_service()
+
+    def false_receipt(self):
+        global cur, connection, login
+        self.receipt_window.tableWidget.setColumnCount(9)
+        self.receipt_window.tableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(7, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(8, item)
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(0)
+        item.setText("Код")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(1)
+        item.setText("Номер машины")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(2)
+        item.setText("Описание")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(3)
+        item.setText("Начало поездки")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(4)
+        item.setText("Конец поездки")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(5)
+        item.setText("Стоимость")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(6)
+        item.setText("Статус")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(7)
+        item.setText("ФИО")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(8)
+        item.setText("Телефонный номер")
+        cur.execute("select code1, car_id, description, start_trip, end_trip, \"cost\", status, full_name, phone from receipt WHERE status=false")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.receipt_window.tableWidget.rowCount()
+            self.receipt_window.tableWidget.insertRow(rowPosition)
+            for i in range(self.receipt_window.tableWidget.columnCount()):
+                self.receipt_window.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.receipt_window.tableWidget.resizeColumnToContents(0)
+        self.receipt_window.tableWidget.resizeColumnToContents(1)
+        self.receipt_window.tableWidget.resizeColumnToContents(2)
+        self.receipt_window.tableWidget.resizeColumnToContents(3)
+        self.receipt_window.tableWidget.resizeColumnToContents(4)
+        self.receipt_window.tableWidget.resizeColumnToContents(5)
+        self.receipt_window.tableWidget.resizeColumnToContents(6)
+        self.receipt_window.tableWidget.resizeColumnToContents(7)
+        self.receipt_window.tableWidget.resizeColumnToContents(8)
+
+    def receipt(self):
+        global cur, connection, login
+        self.receipt_window.tableWidget.setColumnCount(9)
+        self.receipt_window.tableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(7, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.receipt_window.tableWidget.setHorizontalHeaderItem(8, item)
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(0)
+        item.setText("Код")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(1)
+        item.setText("Номер машины")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(2)
+        item.setText("Описание")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(3)
+        item.setText("Начало поездки")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(4)
+        item.setText("Конец поездки")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(5)
+        item.setText("Стоимость")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(6)
+        item.setText("Статус")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(7)
+        item.setText("ФИО")
+        item = self.receipt_window.tableWidget.horizontalHeaderItem(8)
+        item.setText("Телефонный номер")
+        cur.execute("select code1, car_id, description, start_trip, end_trip, \"cost\", status, full_name, phone from receipt")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.receipt_window.tableWidget.rowCount()
+            self.receipt_window.tableWidget.insertRow(rowPosition)
+            for i in range(self.receipt_window.tableWidget.columnCount()):
+                self.receipt_window.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.receipt_window.tableWidget.resizeColumnToContents(0)
+        self.receipt_window.tableWidget.resizeColumnToContents(1)
+        self.receipt_window.tableWidget.resizeColumnToContents(2)
+        self.receipt_window.tableWidget.resizeColumnToContents(3)
+        self.receipt_window.tableWidget.resizeColumnToContents(4)
+        self.receipt_window.tableWidget.resizeColumnToContents(5)
+        self.receipt_window.tableWidget.resizeColumnToContents(6)
+        self.receipt_window.tableWidget.resizeColumnToContents(7)
+        self.receipt_window.tableWidget.resizeColumnToContents(8)
 
     def violations(self):
         global cur, connection, login
@@ -814,6 +973,17 @@ class Client(QMainWindow, ClientWindow.Ui_MainWindow):
         self.insert_btn.clicked.connect(self.create_order_window)
         self.update_btn.clicked.connect(lambda:self.update_client(self.name_line.text(), self.phone_line.text(), self.passport_line.text()))
         self.find_btn.clicked.connect(lambda:self.find_brand(self.brand_line.text()))
+        self.delete_btn.clicked.connect(self.create_delete_account_window)
+
+    def create_delete_account_window(self):
+        window = DeleteAccount()
+        window.yes_btn.clicked.connect(lambda:self.delete_account(window))
+        window.no_btn.clicked.connect(window.close)
+        window.exec()
+    
+    def delete_account(self, window):
+        global cur, connection, login
+        
 
     def find_brand(self, part_brand):
         global cur, connection, login
@@ -1243,16 +1413,18 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             connection = psycopg2.connect(
             host="localhost", 
             database="CarsharingDB",
-            # user = lgn,
-            # password = pwd
-            user="Johand",
-            password="5T7BRYYMSO"
+            user = lgn,
+            password = pwd
+            # user="Johand",
+            # password="5T7BRYYMSO"
             # user="Qwardley",
             # password="SHH389ZCA4"
             )
             connection.set_client_encoding("WIN1251")
             cur = connection.cursor()
             connection.commit()
+            login = lgn
+            print(login)
             self.close()
         except Exception as ex:
             reject = QMessageBox()

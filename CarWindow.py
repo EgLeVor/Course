@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(311, 381)
+        Dialog.resize(311, 481)
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(20, 10, 131, 31))
         font = QtGui.QFont()
@@ -72,6 +72,12 @@ class Ui_Dialog(object):
         self.add_btn = QtWidgets.QPushButton(Dialog)
         self.add_btn.setGeometry(QtCore.QRect(160, 317, 111, 41))
         self.add_btn.setObjectName("add_btn")
+        self.delete_btn = QtWidgets.QPushButton(Dialog)
+        self.delete_btn.setGeometry(QtCore.QRect(60, 390, 171, 41))
+        self.delete_btn.setObjectName("delete_btn")
+        self.car_box = QtWidgets.QComboBox(Dialog)
+        self.car_box.setGeometry(QtCore.QRect(100, 440, 91, 31))
+        self.car_box.setObjectName("car_box")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -86,6 +92,7 @@ class Ui_Dialog(object):
         self.label_5.setText(_translate("Dialog", "Дата покупки (формат гггг-мм-дд)"))
         self.label_6.setText(_translate("Dialog", "ИД поставщика"))
         self.add_btn.setText(_translate("Dialog", "Добавить"))
+        self.delete_btn.setText(_translate("Dialog", "Удалить"))
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1141, 217)
+        Dialog.resize(1141, 260)
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.tableWidget.setGeometry(QtCore.QRect(10, 10, 1121, 192))
         self.tableWidget.setStyleSheet("")
@@ -49,6 +49,12 @@ class Ui_Dialog(object):
         self.tableWidget.setHorizontalHeaderItem(6, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(7, item)
+        self.false_btn = QtWidgets.QPushButton(Dialog)
+        self.false_btn.setGeometry(QtCore.QRect(20, 210, 181, 41))
+        self.false_btn.setObjectName("false_btn")
+        self.all_btn = QtWidgets.QPushButton(Dialog)
+        self.all_btn.setGeometry(QtCore.QRect(210, 210, 181, 41))
+        self.all_btn.setObjectName("all_btn")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -72,6 +78,8 @@ class Ui_Dialog(object):
         item.setText(_translate("Dialog", "Стоимость"))
         item = self.tableWidget.horizontalHeaderItem(7)
         item.setText(_translate("Dialog", "Статус"))
+        self.false_btn.setText(_translate("Dialog", "Неоплаченные поездки"))
+        self.all_btn.setText(_translate("Dialog", "Все поездки"))
 
 
 if __name__ == "__main__":

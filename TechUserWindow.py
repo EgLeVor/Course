@@ -202,9 +202,9 @@ class Ui_MainWindow(object):
         self.phone_lbl.setText(_translate("MainWindow", "Телефон"))
         self.clients_viol_btn.setText(_translate("MainWindow", "Информация о клиентах"))
         self.orders_trips_btn.setText(_translate("MainWindow", "Информация о заказах"))
-        self.workshop_btn.setText(_translate("MainWindow", "Добавить автомастерскую"))
-        self.supplier_btn.setText(_translate("MainWindow", "Добавить поставщика"))
-        self.car_contract_btn.setText(_translate("MainWindow", "Добавить машину (через контракт)"))
+        self.workshop_btn.setText(_translate("MainWindow", "Добавить/Удалить автомастерскую"))
+        self.supplier_btn.setText(_translate("MainWindow", "Добавить/Удалить поставщика"))
+        self.car_contract_btn.setText(_translate("MainWindow", "Добавить/Удалить машину"))
         self.tech_service_btn.setText(_translate("MainWindow", "Отправить машину на ремонт"))
         self.finish_btn.setText(_translate("MainWindow", "Закончить ремонт машины"))
 
