@@ -14,11 +14,39 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ClientOrderWindow(object):
     def setupUi(self, ClientOrderWindow):
         ClientOrderWindow.setObjectName("ClientOrderWindow")
-        ClientOrderWindow.resize(352, 180)
+        ClientOrderWindow.resize(352, 206)
+        ClientOrderWindow.setStyleSheet("QWidget{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QLabel{\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.confirm_btn = QtWidgets.QPushButton(ClientOrderWindow)
-        self.confirm_btn.setGeometry(QtCore.QRect(90, 130, 171, 28))
+        self.confirm_btn.setGeometry(QtCore.QRect(30, 140, 291, 41))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("MS Shell Dlg 2")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.confirm_btn.setFont(font)
         self.confirm_btn.setObjectName("confirm_btn")
         self.car_box = QtWidgets.QComboBox(ClientOrderWindow)
@@ -28,7 +56,7 @@ class Ui_ClientOrderWindow(object):
         self.descr_line.setGeometry(QtCore.QRect(140, 90, 181, 21))
         self.descr_line.setObjectName("descr_line")
         self.car_lbl = QtWidgets.QLabel(ClientOrderWindow)
-        self.car_lbl.setGeometry(QtCore.QRect(30, 30, 211, 41))
+        self.car_lbl.setGeometry(QtCore.QRect(30, 40, 211, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.car_lbl.setFont(font)

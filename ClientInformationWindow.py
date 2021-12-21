@@ -14,65 +14,136 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1191, 543)
+        Dialog.resize(949, 708)
+        Dialog.setStyleSheet("QWidget{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QPushButton#delete_btn{\n"
+"    background-color: rgb(209, 0, 0);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"\n"
+"}\n"
+"QLabel{\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLabel#inf_lbl{\n"
+"    font-weight: bold\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QTableWidget{\n"
+"    color:rgb(255, 255, 255);\n"
+"}")
         self.clients_tbl = QtWidgets.QTableWidget(Dialog)
         self.clients_tbl.setGeometry(QtCore.QRect(20, 45, 911, 211))
         self.clients_tbl.setObjectName("clients_tbl")
         self.clients_tbl.setColumnCount(6)
         self.clients_tbl.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.clients_tbl.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.clients_tbl.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.clients_tbl.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.clients_tbl.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.clients_tbl.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.clients_tbl.setHorizontalHeaderItem(5, item)
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(20, 15, 71, 21))
+        self.label.setGeometry(QtCore.QRect(20, 15, 911, 21))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(12)
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(20, 260, 201, 31))
+        self.label_2.setGeometry(QtCore.QRect(20, 280, 911, 16))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.violations_tbl = QtWidgets.QTableWidget(Dialog)
-        self.violations_tbl.setGeometry(QtCore.QRect(20, 295, 911, 211))
+        self.violations_tbl.setGeometry(QtCore.QRect(20, 310, 911, 211))
         self.violations_tbl.setObjectName("violations_tbl")
         self.violations_tbl.setColumnCount(2)
         self.violations_tbl.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.violations_tbl.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.violations_tbl.setHorizontalHeaderItem(1, item)
         self.update_tbl_btn = QtWidgets.QPushButton(Dialog)
-        self.update_tbl_btn.setGeometry(QtCore.QRect(950, 50, 221, 41))
+        self.update_tbl_btn.setGeometry(QtCore.QRect(710, 650, 221, 41))
         self.update_tbl_btn.setObjectName("update_tbl_btn")
         self.update_viol_btn = QtWidgets.QPushButton(Dialog)
-        self.update_viol_btn.setGeometry(QtCore.QRect(950, 360, 211, 41))
+        self.update_viol_btn.setGeometry(QtCore.QRect(20, 650, 231, 41))
         self.update_viol_btn.setObjectName("update_viol_btn")
         self.lgn_box = QtWidgets.QComboBox(Dialog)
-        self.lgn_box.setGeometry(QtCore.QRect(1080, 300, 81, 21))
+        self.lgn_box.setGeometry(QtCore.QRect(140, 560, 111, 21))
         self.lgn_box.setObjectName("lgn_box")
         self.label_3 = QtWidgets.QLabel(Dialog)
-        self.label_3.setGeometry(QtCore.QRect(950, 300, 121, 21))
+        self.label_3.setGeometry(QtCore.QRect(20, 560, 111, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.cnt_line = QtWidgets.QLineEdit(Dialog)
-        self.cnt_line.setGeometry(QtCore.QRect(1110, 330, 51, 22))
+        self.cnt_line.setGeometry(QtCore.QRect(140, 600, 111, 22))
         self.cnt_line.setObjectName("cnt_line")
         self.label_4 = QtWidgets.QLabel(Dialog)
-        self.label_4.setGeometry(QtCore.QRect(950, 330, 151, 21))
+        self.label_4.setGeometry(QtCore.QRect(20, 600, 111, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_4.setFont(font)

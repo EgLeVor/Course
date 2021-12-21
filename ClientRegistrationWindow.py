@@ -16,15 +16,13 @@ class Ui_RegistrationWindow(object):
         RegistrationWindow.setObjectName("RegistrationWindow")
         RegistrationWindow.resize(503, 752)
         RegistrationWindow.setStyleSheet("QPushButton{\n"
-"    \n"
 "    font: 75 9pt \"MS Shell Dlg 2\";\n"
 "    background-color: rgb(170, 170, 255);\n"
 "    color: rgb(255, 255, 255);\n"
 "    font-weight: bold\n"
 "}\n"
 "QPushButton#exit_btn{\n"
-"    \n"
-"    background-color: rgb(209, 0, 0);\n"
+"    background-color: rgb(211, 47, 47);\n"
 "    font: 75 9pt \"MS Shell Dlg 2\";\n"
 "    font-weight: bold\n"
 "\n"
@@ -46,7 +44,7 @@ class Ui_RegistrationWindow(object):
 "    color: rgb(255, 255, 255);\n"
 "}")
         self.lgn_lbl = QtWidgets.QLabel(RegistrationWindow)
-        self.lgn_lbl.setGeometry(QtCore.QRect(90, 110, 301, 31))
+        self.lgn_lbl.setGeometry(QtCore.QRect(90, 110, 301, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.lgn_lbl.setFont(font)
@@ -55,16 +53,16 @@ class Ui_RegistrationWindow(object):
         self.lgn_line.setGeometry(QtCore.QRect(90, 140, 301, 31))
         self.lgn_line.setObjectName("lgn_line")
         self.pwd_lbl = QtWidgets.QLabel(RegistrationWindow)
-        self.pwd_lbl.setGeometry(QtCore.QRect(90, 180, 301, 31))
+        self.pwd_lbl.setGeometry(QtCore.QRect(90, 190, 301, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pwd_lbl.setFont(font)
         self.pwd_lbl.setObjectName("pwd_lbl")
         self.pwd_line = QtWidgets.QLineEdit(RegistrationWindow)
-        self.pwd_line.setGeometry(QtCore.QRect(90, 210, 301, 31))
+        self.pwd_line.setGeometry(QtCore.QRect(90, 220, 301, 31))
         self.pwd_line.setObjectName("pwd_line")
         self.phone_lbl = QtWidgets.QLabel(RegistrationWindow)
-        self.phone_lbl.setGeometry(QtCore.QRect(90, 280, 301, 31))
+        self.phone_lbl.setGeometry(QtCore.QRect(90, 281, 301, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.phone_lbl.setFont(font)
@@ -73,34 +71,34 @@ class Ui_RegistrationWindow(object):
         self.phone_line.setGeometry(QtCore.QRect(90, 310, 301, 31))
         self.phone_line.setObjectName("phone_line")
         self.name_lbl = QtWidgets.QLabel(RegistrationWindow)
-        self.name_lbl.setGeometry(QtCore.QRect(90, 350, 301, 31))
+        self.name_lbl.setGeometry(QtCore.QRect(90, 360, 301, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.name_lbl.setFont(font)
         self.name_lbl.setObjectName("name_lbl")
         self.name_line = QtWidgets.QLineEdit(RegistrationWindow)
-        self.name_line.setGeometry(QtCore.QRect(90, 380, 301, 31))
+        self.name_line.setGeometry(QtCore.QRect(90, 390, 301, 31))
         self.name_line.setObjectName("name_line")
         self.passport_lbl = QtWidgets.QLabel(RegistrationWindow)
-        self.passport_lbl.setGeometry(QtCore.QRect(90, 420, 301, 31))
+        self.passport_lbl.setGeometry(QtCore.QRect(90, 440, 301, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.passport_lbl.setFont(font)
         self.passport_lbl.setObjectName("passport_lbl")
         self.passport_line = QtWidgets.QLineEdit(RegistrationWindow)
-        self.passport_line.setGeometry(QtCore.QRect(90, 450, 301, 31))
+        self.passport_line.setGeometry(QtCore.QRect(90, 470, 301, 31))
         self.passport_line.setObjectName("passport_line")
         self.drv_line = QtWidgets.QLineEdit(RegistrationWindow)
-        self.drv_line.setGeometry(QtCore.QRect(90, 520, 301, 31))
+        self.drv_line.setGeometry(QtCore.QRect(90, 550, 301, 31))
         self.drv_line.setObjectName("drv_line")
         self.drv_lbl = QtWidgets.QLabel(RegistrationWindow)
-        self.drv_lbl.setGeometry(QtCore.QRect(90, 490, 301, 31))
+        self.drv_lbl.setGeometry(QtCore.QRect(90, 520, 301, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.drv_lbl.setFont(font)
         self.drv_lbl.setObjectName("drv_lbl")
         self.reg_btn = QtWidgets.QPushButton(RegistrationWindow)
-        self.reg_btn.setGeometry(QtCore.QRect(90, 580, 301, 41))
+        self.reg_btn.setGeometry(QtCore.QRect(90, 610, 301, 41))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(9)
@@ -110,7 +108,7 @@ class Ui_RegistrationWindow(object):
         self.reg_btn.setFont(font)
         self.reg_btn.setObjectName("reg_btn")
         self.exit_btn = QtWidgets.QPushButton(RegistrationWindow)
-        self.exit_btn.setGeometry(QtCore.QRect(90, 640, 301, 41))
+        self.exit_btn.setGeometry(QtCore.QRect(90, 670, 301, 41))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(9)
@@ -120,10 +118,11 @@ class Ui_RegistrationWindow(object):
         self.exit_btn.setFont(font)
         self.exit_btn.setObjectName("exit_btn")
         self.main_lbl = QtWidgets.QLabel(RegistrationWindow)
-        self.main_lbl.setGeometry(QtCore.QRect(120, 20, 241, 81))
+        self.main_lbl.setGeometry(QtCore.QRect(90, 20, 301, 81))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.main_lbl.setFont(font)
+        self.main_lbl.setAlignment(QtCore.Qt.AlignCenter)
         self.main_lbl.setObjectName("main_lbl")
 
         self.retranslateUi(RegistrationWindow)

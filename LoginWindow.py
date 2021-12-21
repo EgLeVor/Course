@@ -14,66 +14,62 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):
         LoginWindow.setObjectName("LoginWindow")
-        LoginWindow.resize(401, 359)
+        LoginWindow.resize(401, 410)
         LoginWindow.setStyleSheet("QPushButton{\n"
-"    \n"
 "    font: 75 9pt \"MS Shell Dlg 2\";\n"
 "    background-color: rgb(170, 170, 255);\n"
 "    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
 "}\n"
 "QPushButton#exit_btn{\n"
-"    \n"
-"    background-color: rgb(209, 0, 0);\n"
+"    background-color: rgb(211, 47, 47);\n"
 "    font: 75 9pt \"MS Shell Dlg 2\";\n"
 "    font-weight: bold\n"
-"\n"
 "}\n"
 "QDialog{\n"
-"\n"
 "    background-color: rgb(44, 44, 64);\n"
 "}\n"
 "QLabel{\n"
-"    \n"
 "    color: rgb(255, 255, 255);\n"
 "}\n"
 "QLineEdit{\n"
-"    \n"
 "    background-color: rgb(50, 50, 64);\n"
 "    color: rgb(255, 255, 255);\n"
 "}\n"
 "")
         self.main_lbl = QtWidgets.QLabel(LoginWindow)
-        self.main_lbl.setGeometry(QtCore.QRect(150, 0, 91, 81))
+        self.main_lbl.setGeometry(QtCore.QRect(30, 0, 341, 81))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.main_lbl.setFont(font)
+        self.main_lbl.setAlignment(QtCore.Qt.AlignCenter)
         self.main_lbl.setObjectName("main_lbl")
         self.lgn_lbl = QtWidgets.QLabel(LoginWindow)
-        self.lgn_lbl.setGeometry(QtCore.QRect(30, 80, 131, 16))
+        self.lgn_lbl.setGeometry(QtCore.QRect(30, 90, 341, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.lgn_lbl.setFont(font)
         self.lgn_lbl.setObjectName("lgn_lbl")
         self.lgn_line = QtWidgets.QLineEdit(LoginWindow)
-        self.lgn_line.setGeometry(QtCore.QRect(30, 110, 341, 31))
+        self.lgn_line.setGeometry(QtCore.QRect(30, 120, 341, 31))
         self.lgn_line.setObjectName("lgn_line")
         self.pwd_lbl = QtWidgets.QLabel(LoginWindow)
-        self.pwd_lbl.setGeometry(QtCore.QRect(30, 160, 131, 16))
+        self.pwd_lbl.setGeometry(QtCore.QRect(30, 170, 341, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pwd_lbl.setFont(font)
         self.pwd_lbl.setObjectName("pwd_lbl")
         self.pwd_line = QtWidgets.QLineEdit(LoginWindow)
-        self.pwd_line.setGeometry(QtCore.QRect(30, 190, 341, 31))
+        self.pwd_line.setGeometry(QtCore.QRect(30, 200, 341, 31))
         self.pwd_line.setObjectName("pwd_line")
         self.reg_btn = QtWidgets.QPushButton(LoginWindow)
-        self.reg_btn.setGeometry(QtCore.QRect(30, 240, 111, 41))
+        self.reg_btn.setGeometry(QtCore.QRect(30, 260, 121, 41))
         self.reg_btn.setObjectName("reg_btn")
         self.lgn_btn = QtWidgets.QPushButton(LoginWindow)
-        self.lgn_btn.setGeometry(QtCore.QRect(160, 240, 211, 41))
+        self.lgn_btn.setGeometry(QtCore.QRect(170, 260, 201, 41))
         self.lgn_btn.setObjectName("lgn_btn")
         self.exit_btn = QtWidgets.QPushButton(LoginWindow)
-        self.exit_btn.setGeometry(QtCore.QRect(30, 300, 341, 41))
+        self.exit_btn.setGeometry(QtCore.QRect(30, 320, 341, 41))
         self.exit_btn.setObjectName("exit_btn")
 
         self.retranslateUi(LoginWindow)

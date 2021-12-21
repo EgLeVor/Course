@@ -14,21 +14,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(806, 696)
+        MainWindow.resize(809, 696)
         MainWindow.setStyleSheet("QWidget{\n"
-"\n"
 "    background-color: rgb(44, 44, 64);\n"
 "}\n"
 "QPushButton{\n"
-"    \n"
 "    font: 75 9pt \"MS Shell Dlg 2\";\n"
 "    background-color: rgb(170, 170, 255);\n"
 "    color: rgb(255, 255, 255);\n"
 "    font-weight: bold\n"
 "}\n"
 "QPushButton#delete_btn{\n"
-"    \n"
-"    background-color: rgb(209, 0, 0);\n"
+"    background-color: rgb(211, 47, 47);\n"
 "    font: 75 9pt \"MS Shell Dlg 2\";\n"
 "    font-weight: bold\n"
 "\n"
@@ -46,25 +43,19 @@ class Ui_MainWindow(object):
 "    color: rgb(255, 255, 255);\n"
 "}\n"
 "QLabel#inf_lbl{\n"
-"    \n"
 "    font-weight: bold\n"
 "}\n"
 "QComboBox{\n"
 "    background-color: rgb(50, 50, 64);\n"
-"\n"
 "    color: rgb(255, 255, 255);\n"
-"}"
+"}\n"
 "QTableWidget{\n"
-"    background-color: rgb(50, 50, 64);\n"
-"\n"
-"    color: rgb(255, 255, 255);\n"
-"}"
-)
-
+"    color:rgb(255, 255, 255);\n"
+"}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(10, 10, 791, 192))
+        self.tableWidget.setGeometry(QtCore.QRect(10, 10, 791, 291))
         self.tableWidget.setStyleSheet("")
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(4)
@@ -73,45 +64,61 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         item.setFont(font)
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
         font.setPointSize(10)
         item.setFont(font)
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
         font.setPointSize(10)
         item.setFont(font)
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
         font.setPointSize(10)
         item.setFont(font)
+        item.setBackground(QtGui.QColor(44, 44, 64))
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(3, item)
         self.passport_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.passport_lbl.setGeometry(QtCore.QRect(520, 540, 281, 21))
+        self.passport_lbl.setGeometry(QtCore.QRect(500, 540, 281, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.passport_lbl.setFont(font)
         self.passport_lbl.setObjectName("passport_lbl")
         self.phone_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.phone_lbl.setGeometry(QtCore.QRect(520, 460, 281, 21))
+        self.phone_lbl.setGeometry(QtCore.QRect(500, 460, 281, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.phone_lbl.setFont(font)
         self.phone_lbl.setObjectName("phone_lbl")
         self.update_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.update_btn.setGeometry(QtCore.QRect(520, 630, 281, 41))
+        self.update_btn.setGeometry(QtCore.QRect(500, 630, 281, 41))
         self.update_btn.setObjectName("update_btn")
         self.phone_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.phone_line.setGeometry(QtCore.QRect(520, 490, 281, 31))
+        self.phone_line.setGeometry(QtCore.QRect(500, 490, 281, 31))
         self.phone_line.setObjectName("phone_line")
         self.passport_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.passport_line.setGeometry(QtCore.QRect(520, 570, 281, 31))
+        self.passport_line.setGeometry(QtCore.QRect(500, 570, 281, 31))
         self.passport_line.setObjectName("passport_line")
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox.setGeometry(QtCore.QRect(10, 220, 141, 31))
+        self.comboBox.setGeometry(QtCore.QRect(30, 330, 411, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.comboBox.setFont(font)
@@ -120,22 +127,22 @@ class Ui_MainWindow(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.trip_info_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.trip_info_btn.setGeometry(QtCore.QRect(10, 260, 201, 41))
+        self.trip_info_btn.setGeometry(QtCore.QRect(240, 390, 201, 41))
         self.trip_info_btn.setObjectName("trip_info_btn")
         self.insert_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.insert_btn.setGeometry(QtCore.QRect(220, 260, 201, 41))
+        self.insert_btn.setGeometry(QtCore.QRect(30, 390, 201, 41))
         self.insert_btn.setObjectName("insert_btn")
         self.name_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.name_lbl.setGeometry(QtCore.QRect(520, 380, 281, 21))
+        self.name_lbl.setGeometry(QtCore.QRect(500, 380, 281, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.name_lbl.setFont(font)
         self.name_lbl.setObjectName("name_lbl")
         self.name_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.name_line.setGeometry(QtCore.QRect(520, 410, 281, 31))
+        self.name_line.setGeometry(QtCore.QRect(500, 410, 281, 31))
         self.name_line.setObjectName("name_line")
         self.inf_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.inf_lbl.setGeometry(QtCore.QRect(520, 330, 281, 31))
+        self.inf_lbl.setGeometry(QtCore.QRect(500, 330, 281, 31))
         font = QtGui.QFont()
         font.setPointSize(9)
         font.setBold(True)
@@ -143,20 +150,20 @@ class Ui_MainWindow(object):
         self.inf_lbl.setFont(font)
         self.inf_lbl.setObjectName("inf_lbl")
         self.find_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.find_btn.setGeometry(QtCore.QRect(10, 380, 411, 41))
+        self.find_btn.setGeometry(QtCore.QRect(30, 570, 411, 41))
         self.find_btn.setObjectName("find_btn")
         self.brand_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.brand_line.setGeometry(QtCore.QRect(150, 320, 271, 31))
+        self.brand_line.setGeometry(QtCore.QRect(140, 510, 301, 31))
         self.brand_line.setFrame(True)
         self.brand_line.setObjectName("brand_line")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(20, 320, 121, 31))
+        self.label.setGeometry(QtCore.QRect(30, 510, 111, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.delete_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.delete_btn.setGeometry(QtCore.QRect(10, 440, 411, 41))
+        self.delete_btn.setGeometry(QtCore.QRect(30, 630, 411, 41))
         self.delete_btn.setObjectName("delete_btn")
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -184,7 +191,7 @@ class Ui_MainWindow(object):
         self.name_lbl.setText(_translate("MainWindow", "ФИО"))
         self.inf_lbl.setText(_translate("MainWindow", "Информация о пользователе:"))
         self.find_btn.setText(_translate("MainWindow", "Найти машину по бренду"))
-        self.label.setText(_translate("MainWindow", "Введите брэнд"))
+        self.label.setText(_translate("MainWindow", "Введите бренд"))
         self.delete_btn.setText(_translate("MainWindow", "Удалить аккаунт"))
 
 
