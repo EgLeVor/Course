@@ -14,37 +14,86 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(931, 271)
+        Dialog.resize(931, 338)
+        Dialog.setStyleSheet("QWidget{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QPushButton#end_btn{\n"
+"    background-color: rgb(211, 47, 47);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"\n"
+"}\n"
+"QLabel{\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLabel#inf_lbl{\n"
+"    font-weight: bold\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QTableWidget{\n"
+"    color:rgb(255, 255, 255);\n"
+"}")
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.tableWidget.setGeometry(QtCore.QRect(30, 20, 871, 161))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.comboBox = QtWidgets.QComboBox(Dialog)
-        self.comboBox.setGeometry(QtCore.QRect(250, 190, 73, 31))
+        self.comboBox.setGeometry(QtCore.QRect(222, 210, 101, 31))
         self.comboBox.setObjectName("comboBox")
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(30, 190, 211, 21))
+        self.label.setGeometry(QtCore.QRect(30, 210, 191, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.end_btn = QtWidgets.QPushButton(Dialog)
-        self.end_btn.setGeometry(QtCore.QRect(580, 190, 171, 31))
+        self.end_btn.setGeometry(QtCore.QRect(30, 270, 171, 41))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("MS Shell Dlg 2")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.end_btn.setFont(font)
         self.end_btn.setObjectName("end_btn")
         self.pay_btn = QtWidgets.QPushButton(Dialog)
-        self.pay_btn.setGeometry(QtCore.QRect(760, 190, 141, 31))
+        self.pay_btn.setGeometry(QtCore.QRect(760, 270, 141, 41))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("MS Shell Dlg 2")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.pay_btn.setFont(font)
         self.pay_btn.setObjectName("pay_btn")
         self.load_btn = QtWidgets.QPushButton(Dialog)
-        self.load_btn.setGeometry(QtCore.QRect(580, 230, 321, 31))
+        self.load_btn.setGeometry(QtCore.QRect(320, 270, 321, 41))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("MS Shell Dlg 2")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.load_btn.setFont(font)
         self.load_btn.setObjectName("load_btn")
 

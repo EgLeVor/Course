@@ -14,33 +14,68 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(311, 481)
+        Dialog.resize(311, 574)
+        Dialog.setStyleSheet("QWidget{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QPushButton#delete_btn{\n"
+"    background-color: rgb(211, 47, 47);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"}\n"
+"QLabel{\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLabel#inf_lbl{\n"
+"    font-weight: bold\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QTableWidget{\n"
+"    color:rgb(255, 255, 255);\n"
+"}")
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(20, 10, 131, 31))
+        self.label.setGeometry(QtCore.QRect(20, 10, 271, 20))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(20, 70, 181, 31))
+        self.label_2.setGeometry(QtCore.QRect(20, 90, 271, 20))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(Dialog)
-        self.label_3.setGeometry(QtCore.QRect(20, 130, 151, 31))
+        self.label_3.setGeometry(QtCore.QRect(20, 170, 271, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(Dialog)
-        self.label_4.setGeometry(QtCore.QRect(20, 190, 151, 31))
+        self.label_4.setGeometry(QtCore.QRect(20, 250, 271, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(Dialog)
-        self.label_5.setGeometry(QtCore.QRect(20, 250, 281, 31))
+        self.label_5.setGeometry(QtCore.QRect(20, 330, 271, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_5.setFont(font)
@@ -49,34 +84,34 @@ class Ui_Dialog(object):
         self.brand_line.setGeometry(QtCore.QRect(20, 40, 271, 22))
         self.brand_line.setObjectName("brand_line")
         self.mileage_line = QtWidgets.QLineEdit(Dialog)
-        self.mileage_line.setGeometry(QtCore.QRect(20, 100, 271, 22))
+        self.mileage_line.setGeometry(QtCore.QRect(20, 120, 271, 22))
         self.mileage_line.setObjectName("mileage_line")
         self.loc_line = QtWidgets.QLineEdit(Dialog)
-        self.loc_line.setGeometry(QtCore.QRect(20, 160, 271, 22))
+        self.loc_line.setGeometry(QtCore.QRect(20, 200, 271, 22))
         self.loc_line.setObjectName("loc_line")
         self.cost_line = QtWidgets.QLineEdit(Dialog)
-        self.cost_line.setGeometry(QtCore.QRect(20, 220, 271, 22))
+        self.cost_line.setGeometry(QtCore.QRect(20, 280, 271, 22))
         self.cost_line.setObjectName("cost_line")
         self.buy_date_line = QtWidgets.QLineEdit(Dialog)
-        self.buy_date_line.setGeometry(QtCore.QRect(20, 280, 271, 22))
+        self.buy_date_line.setGeometry(QtCore.QRect(20, 360, 271, 22))
         self.buy_date_line.setObjectName("buy_date_line")
         self.supplier_box = QtWidgets.QComboBox(Dialog)
-        self.supplier_box.setGeometry(QtCore.QRect(40, 340, 73, 31))
+        self.supplier_box.setGeometry(QtCore.QRect(220, 400, 73, 31))
         self.supplier_box.setObjectName("supplier_box")
         self.label_6 = QtWidgets.QLabel(Dialog)
-        self.label_6.setGeometry(QtCore.QRect(20, 310, 151, 31))
+        self.label_6.setGeometry(QtCore.QRect(20, 400, 191, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.add_btn = QtWidgets.QPushButton(Dialog)
-        self.add_btn.setGeometry(QtCore.QRect(160, 317, 111, 41))
+        self.add_btn.setGeometry(QtCore.QRect(170, 510, 121, 41))
         self.add_btn.setObjectName("add_btn")
         self.delete_btn = QtWidgets.QPushButton(Dialog)
-        self.delete_btn.setGeometry(QtCore.QRect(60, 390, 171, 41))
+        self.delete_btn.setGeometry(QtCore.QRect(20, 510, 121, 41))
         self.delete_btn.setObjectName("delete_btn")
         self.car_box = QtWidgets.QComboBox(Dialog)
-        self.car_box.setGeometry(QtCore.QRect(100, 440, 91, 31))
+        self.car_box.setGeometry(QtCore.QRect(20, 450, 271, 31))
         self.car_box.setObjectName("car_box")
 
         self.retranslateUi(Dialog)
@@ -89,7 +124,7 @@ class Ui_Dialog(object):
         self.label_2.setText(_translate("Dialog", "Пробег (в километрах)"))
         self.label_3.setText(_translate("Dialog", "Местонахождение"))
         self.label_4.setText(_translate("Dialog", "Цена (в рублях)"))
-        self.label_5.setText(_translate("Dialog", "Дата покупки (формат гггг-мм-дд)"))
+        self.label_5.setText(_translate("Dialog", "Дата покупки (я формате гггг-мм-дд)"))
         self.label_6.setText(_translate("Dialog", "ИД поставщика"))
         self.add_btn.setText(_translate("Dialog", "Добавить"))
         self.delete_btn.setText(_translate("Dialog", "Удалить"))

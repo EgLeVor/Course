@@ -14,7 +14,44 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(772, 309)
+        MainWindow.resize(772, 422)
+        MainWindow.setStyleSheet("QWidget{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QPushButton#delete_btn{\n"
+"    background-color: rgb(211, 47, 47);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"\n"
+"}\n"
+"QLabel{\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLabel#inf_lbl{\n"
+"    font-weight: bold\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QTableWidget{\n"
+"    color:rgb(255, 255, 255);\n"
+"}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
@@ -23,25 +60,25 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.refresh_tbl = QtWidgets.QPushButton(self.centralwidget)
-        self.refresh_tbl.setGeometry(QtCore.QRect(20, 210, 161, 41))
+        self.refresh_tbl.setGeometry(QtCore.QRect(520, 350, 241, 41))
         self.refresh_tbl.setObjectName("refresh_tbl")
         self.insert_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.insert_btn.setGeometry(QtCore.QRect(600, 210, 161, 41))
+        self.insert_btn.setGeometry(QtCore.QRect(10, 290, 241, 41))
         self.insert_btn.setObjectName("insert_btn")
         self.delete_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.delete_btn.setGeometry(QtCore.QRect(200, 210, 161, 41))
+        self.delete_btn.setGeometry(QtCore.QRect(10, 350, 241, 41))
         self.delete_btn.setObjectName("delete_btn")
         self.update_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.update_btn.setGeometry(QtCore.QRect(370, 210, 221, 41))
+        self.update_btn.setGeometry(QtCore.QRect(520, 290, 241, 41))
         self.update_btn.setObjectName("update_btn")
         self.lgn_box = QtWidgets.QComboBox(self.centralwidget)
-        self.lgn_box.setGeometry(QtCore.QRect(200, 260, 161, 31))
+        self.lgn_box.setGeometry(QtCore.QRect(270, 230, 231, 31))
         self.lgn_box.setObjectName("lgn_box")
         self.pwd_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.pwd_line.setGeometry(QtCore.QRect(370, 260, 221, 31))
+        self.pwd_line.setGeometry(QtCore.QRect(520, 230, 241, 31))
         self.pwd_line.setObjectName("pwd_line")
         self.lgn_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.lgn_line.setGeometry(QtCore.QRect(600, 260, 161, 31))
+        self.lgn_line.setGeometry(QtCore.QRect(10, 230, 241, 31))
         self.lgn_line.setObjectName("lgn_line")
         MainWindow.setCentralWidget(self.centralwidget)
 

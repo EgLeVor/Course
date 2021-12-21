@@ -14,7 +14,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(344, 114)
+        Dialog.resize(348, 114)
+        Dialog.setStyleSheet("QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QDialog{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QLabel{\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 10, 331, 31))
         font = QtGui.QFont()
@@ -22,15 +35,23 @@ class Ui_Dialog(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.yes_btn = QtWidgets.QPushButton(Dialog)
-        self.yes_btn.setGeometry(QtCore.QRect(40, 60, 131, 41))
+        self.yes_btn.setGeometry(QtCore.QRect(10, 60, 131, 41))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("MS Shell Dlg 2")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.yes_btn.setFont(font)
         self.yes_btn.setObjectName("yes_btn")
         self.no_btn = QtWidgets.QPushButton(Dialog)
-        self.no_btn.setGeometry(QtCore.QRect(180, 60, 131, 41))
+        self.no_btn.setGeometry(QtCore.QRect(210, 60, 131, 41))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("MS Shell Dlg 2")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.no_btn.setFont(font)
         self.no_btn.setObjectName("no_btn")
 

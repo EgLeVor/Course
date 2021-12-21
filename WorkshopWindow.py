@@ -14,42 +14,79 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(251, 285)
+        Dialog.resize(286, 357)
+        Dialog.setStyleSheet("QWidget{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QPushButton#delete_btn{\n"
+"    background-color: rgb(211, 47, 47);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"\n"
+"}\n"
+"QLabel{\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLabel#inf_lbl{\n"
+"    font-weight: bold\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QTableWidget{\n"
+"    color:rgb(255, 255, 255);\n"
+"}")
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(10, 10, 181, 31))
+        self.label.setGeometry(QtCore.QRect(10, 10, 251, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(10, 70, 181, 31))
+        self.label_2.setGeometry(QtCore.QRect(10, 80, 251, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(Dialog)
-        self.label_3.setGeometry(QtCore.QRect(10, 130, 181, 31))
+        self.label_3.setGeometry(QtCore.QRect(10, 146, 251, 20))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.mail_line = QtWidgets.QLineEdit(Dialog)
-        self.mail_line.setGeometry(QtCore.QRect(10, 40, 231, 21))
+        self.mail_line.setGeometry(QtCore.QRect(10, 40, 251, 21))
         self.mail_line.setObjectName("mail_line")
         self.phone_line = QtWidgets.QLineEdit(Dialog)
-        self.phone_line.setGeometry(QtCore.QRect(10, 100, 231, 21))
+        self.phone_line.setGeometry(QtCore.QRect(10, 110, 251, 21))
         self.phone_line.setObjectName("phone_line")
         self.fax_line = QtWidgets.QLineEdit(Dialog)
-        self.fax_line.setGeometry(QtCore.QRect(10, 160, 231, 21))
+        self.fax_line.setGeometry(QtCore.QRect(10, 180, 251, 21))
         self.fax_line.setObjectName("fax_line")
         self.add_button = QtWidgets.QPushButton(Dialog)
-        self.add_button.setGeometry(QtCore.QRect(70, 190, 101, 31))
+        self.add_button.setGeometry(QtCore.QRect(150, 280, 111, 41))
         self.add_button.setObjectName("add_button")
         self.delete_btn = QtWidgets.QPushButton(Dialog)
-        self.delete_btn.setGeometry(QtCore.QRect(30, 240, 111, 31))
+        self.delete_btn.setGeometry(QtCore.QRect(10, 280, 111, 41))
         self.delete_btn.setObjectName("delete_btn")
         self.workshop_box = QtWidgets.QComboBox(Dialog)
-        self.workshop_box.setGeometry(QtCore.QRect(150, 240, 73, 31))
+        self.workshop_box.setGeometry(QtCore.QRect(10, 220, 251, 31))
         self.workshop_box.setObjectName("workshop_box")
 
         self.retranslateUi(Dialog)

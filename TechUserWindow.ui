@@ -615,7 +615,7 @@ QTableWidget{
      </font>
     </property>
     <property name="text">
-     <string>Паспортные данные</string>
+     <string>Email</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="phone_line">
@@ -679,7 +679,7 @@ QTableWidget{
      <string>Информация о пользователе:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="passport_line">
+   <widget class="QLineEdit" name="email_line">
     <property name="geometry">
      <rect>
       <x>950</x>

@@ -14,54 +14,91 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(421, 235)
+        Dialog.resize(421, 290)
+        Dialog.setStyleSheet("QWidget{\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QPushButton#delete_btn{\n"
+"    background-color: rgb(211, 47, 47);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"\n"
+"}\n"
+"QLabel{\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLabel#inf_lbl{\n"
+"    font-weight: bold\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QTableWidget{\n"
+"    color:rgb(255, 255, 255);\n"
+"}")
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(20, 10, 121, 31))
+        self.label.setGeometry(QtCore.QRect(20, 10, 91, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(230, 10, 121, 31))
+        self.label_2.setGeometry(QtCore.QRect(230, 10, 101, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.car_box = QtWidgets.QComboBox(Dialog)
-        self.car_box.setGeometry(QtCore.QRect(150, 10, 41, 31))
+        self.car_box.setGeometry(QtCore.QRect(120, 10, 71, 31))
         self.car_box.setObjectName("car_box")
         self.workshop_box = QtWidgets.QComboBox(Dialog)
-        self.workshop_box.setGeometry(QtCore.QRect(360, 10, 41, 31))
+        self.workshop_box.setGeometry(QtCore.QRect(340, 10, 71, 31))
         self.workshop_box.setObjectName("workshop_box")
         self.label_3 = QtWidgets.QLabel(Dialog)
-        self.label_3.setGeometry(QtCore.QRect(20, 60, 121, 31))
+        self.label_3.setGeometry(QtCore.QRect(20, 70, 171, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(Dialog)
-        self.label_4.setGeometry(QtCore.QRect(230, 60, 121, 31))
+        self.label_4.setGeometry(QtCore.QRect(230, 70, 171, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(Dialog)
-        self.label_5.setGeometry(QtCore.QRect(20, 120, 321, 31))
+        self.label_5.setGeometry(QtCore.QRect(20, 150, 381, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.desc_line = QtWidgets.QLineEdit(Dialog)
-        self.desc_line.setGeometry(QtCore.QRect(20, 90, 171, 22))
+        self.desc_line.setGeometry(QtCore.QRect(20, 100, 171, 22))
         self.desc_line.setObjectName("desc_line")
         self.cost_line = QtWidgets.QLineEdit(Dialog)
-        self.cost_line.setGeometry(QtCore.QRect(230, 90, 171, 22))
+        self.cost_line.setGeometry(QtCore.QRect(230, 100, 171, 22))
         self.cost_line.setObjectName("cost_line")
         self.date_line = QtWidgets.QLineEdit(Dialog)
-        self.date_line.setGeometry(QtCore.QRect(20, 150, 321, 22))
+        self.date_line.setGeometry(QtCore.QRect(20, 180, 381, 22))
         self.date_line.setObjectName("date_line")
         self.add_btn = QtWidgets.QPushButton(Dialog)
-        self.add_btn.setGeometry(QtCore.QRect(110, 190, 191, 31))
+        self.add_btn.setGeometry(QtCore.QRect(120, 230, 191, 41))
         self.add_btn.setObjectName("add_btn")
 
         self.retranslateUi(Dialog)
