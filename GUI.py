@@ -982,8 +982,30 @@ class Client(QMainWindow, ClientWindow.Ui_MainWindow):
         window.exec()
     
     def delete_account(self, window):
-        global cur, connection, login
-        
+        global login
+        connection = psycopg2.connect(
+            host="localhost", 
+            database="CarsharingDB",
+            user="postgres",
+            password="QSXFtrew16912"
+            )
+        connection.set_client_encoding("WIN1251")
+        cur = connection.cursor()
+        cur.execute(f"SELECT drv_lic FROM clients WHERE lgn='{login}'")
+        for el in cur.fetchall():
+            drv_lic = el[0]
+        cur.execute(f"DELETE FROM trips WHERE code = (SELECT code FROM orders WHERE lgn='{login}')")
+        cur.execute(f"DELETE FROM clients WHERE lgn='{login}'")
+        cur.execute(f"DELETE FROM violations WHERE drv_lic={drv_lic}")
+        cur.execute(f"DROP ROLE \"{login}\"")
+        connection.commit()
+        reject = QMessageBox()
+        reject.setWindowTitle("Сообщение")
+        reject.setText("Аккаунт удалён!")
+        reject.setStandardButtons(QMessageBox.Ok)
+        reject.exec_()
+        window.close()
+        self.close()
 
     def find_brand(self, part_brand):
         global cur, connection, login
@@ -1388,7 +1410,7 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             connection.set_client_encoding("WIN1251")
             cur = connection.cursor()
             try:
-                cur.execute(f"INSERT INTO clients (lgn, pwd, drv_lic, passport, full_name, phone) VALUES ('{lgn}', '{pwd}', '{drv_lic}', '{passport}', '{full_name}', '{phone}')")
+                cur.execute(f"INSERT INTO clients (lgn, drv_lic, passport, full_name, phone) VALUES ('{lgn}', '{drv_lic}', '{passport}', '{full_name}', '{phone}')")
                 cur.execute(f"CREATE USER \"{lgn}\" WITH ENCRYPTED PASSWORD '{pwd}' IN GROUP \"Client\"")
                 reject = QMessageBox()
                 reject.setWindowTitle("Сообщение")
