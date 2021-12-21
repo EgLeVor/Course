@@ -5,18 +5,169 @@ import psycopg2
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow,QWidget,QPushButton,QLineEdit,QInputDialog,QFormLayout,QMessageBox, QDialogButtonBox)
 
-import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow, ClientInformationWindow, ReceiptWindow, WorkshopWindow, SupplierWindow, CarWindow, TechnicalServiceWindow, DeleteAccountWindow
+import LoginWindow, ClientRegistrationWindow, ClientWindow, TripWindow, ClientOrderWindow, TechUserWindow, ClientInformationWindow, ReceiptWindow, WorkshopWindow, SupplierWindow, CarWindow, TechnicalServiceWindow, DeleteAccountWindow, AdminWindow
 
 connection = None
 cur = None
 role = None
 login = None
 
+def success():
+    reject = QMessageBox()
+    reject.setWindowTitle("Сообщение")
+    reject.setText("Успешно!")
+    reject.setStandardButtons(QMessageBox.Ok)
+    reject.exec_()
+
+def failure():
+    reject = QMessageBox()
+    reject.setWindowTitle("Ошибка")
+    reject.setText("Проверьте введённые данные!")
+    reject.setStandardButtons(QMessageBox.Ok)
+    reject.exec_()
+
 def patrick_pavviaz_protection(goverment: str):
     FACE = ("--", "'", ";", "\\", "/", "||", "chr(")
     if any(el in goverment for el in FACE):
         return ''
     return goverment
+
+class Admin(QMainWindow, AdminWindow.Ui_MainWindow):
+    def __init__(self):
+        global cur, connection, login
+        super().__init__()
+        self.setupUi(self)
+        self.tech_users()
+        self.refresh_tbl.clicked.connect(self.tech_users)
+        cur.execute("SELECT lgn FROM tech_users")
+        for el in cur.fetchall():
+            self.lgn_box.addItem(str(el[0]))
+        self.pwd_line.setEchoMode(QLineEdit.Password)
+        self.delete_btn.clicked.connect(lambda:self.delete_user(self.lgn_box.currentText()))
+        self.update_btn.clicked.connect(lambda:self.update_user(self.lgn_box.currentText(), self.pwd_line.text()))
+        self.insert_btn.clicked.connect(lambda:self.insert_user(self.lgn_line.text(), self.pwd_line.text()))
+
+    def insert_user(self, lgn, pwd):
+        if patrick_pavviaz_protection(pwd) == '' or patrick_pavviaz_protection(lgn) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            cur.execute("SELECT lgn FROM tech_users")
+            logins = []
+            for el in cur.fetchall():
+                logins.append(str(el[0]))
+            check_login = True
+            for el in logins:
+                if lgn == el:
+                    check_login = False
+            if check_login == True:
+                cur.execute(f"INSERT INTO tech_users (lgn, pwd) VALUES ('{lgn}', '{pwd}')")
+                cur.execute(f"CREATE USER \"{lgn}\" WITH ENCRYPTED PASSWORD '{pwd}' IN GROUP \"TechUser\"")
+                connection.commit()
+                cur.execute("SELECT lgn FROM tech_users")
+                self.lgn_box.clear()
+                for el in cur.fetchall():
+                    self.lgn_box.addItem(str(el[0]))
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Успешно!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+            else:
+                reject = QMessageBox()
+                reject.setWindowTitle("Сообщение")
+                reject.setText("Пользователь с таким логином уже существует!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
+
+    def update_user(self, lgn, pwd):
+        global cur, connection, login
+        if patrick_pavviaz_protection(pwd) == '':
+            reject = QMessageBox()
+            reject.setWindowTitle("Ошибка")
+            reject.setText("Проверьте введённые данные!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+        else:
+            cur.execute(f"UPDATE tech_users SET pwd='{pwd}' WHERE lgn='{lgn}'")
+            cur.execute(f"ALTER USER \"{lgn}\" WITH PASSWORD '{pwd}'")
+            connection.commit()
+            reject = QMessageBox()
+            reject.setWindowTitle("Сообщение")
+            reject.setText("Успешно!")
+            reject.setStandardButtons(QMessageBox.Ok)
+            reject.exec_()
+
+    def delete_user(self, lgn):
+        global cur, connection, login
+        cur.execute(f"DELETE FROM tech_users WHERE lgn='{lgn}'")
+        cur.execute(f"DROP ROLE \"{lgn}\"")
+        connection.commit()
+        reject = QMessageBox()
+        reject.setWindowTitle("Сообщение")
+        reject.setText("Успешно!")
+        reject.setStandardButtons(QMessageBox.Ok)
+        reject.exec_()
+        cur.execute("SELECT lgn FROM tech_users")
+        self.lgn_box.clear()
+        for el in cur.fetchall():
+            self.lgn_box.addItem(str(el[0]))
+    
+    def tech_users(self):
+        global cur, connection, login
+        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(4, item)
+        item = self.tableWidget.horizontalHeaderItem(0)
+        item.setText("Логин")
+        item = self.tableWidget.horizontalHeaderItem(1)
+        item.setText("Пароль")
+        item = self.tableWidget.horizontalHeaderItem(2)
+        item.setText("ФИО")
+        item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText("Электронная почта")
+        item = self.tableWidget.horizontalHeaderItem(4)
+        item.setText("Телефон")
+        cur.execute("SELECT * FROM tech_users")
+        tablerow = 0
+        for row in cur.fetchall():
+            rowPosition = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(rowPosition)
+            for i in range(self.tableWidget.columnCount()):
+                self.tableWidget.setItem(tablerow, i, QtWidgets.QTableWidgetItem(str(row[i])))
+            tablerow += 1
+        self.tableWidget.resizeColumnToContents(0)
+        self.tableWidget.resizeColumnToContents(1)
+        self.tableWidget.resizeColumnToContents(2)
+        self.tableWidget.resizeColumnToContents(3)
+        self.tableWidget.resizeColumnToContents(4)
 
 class DeleteAccount(QDialog, DeleteAccountWindow.Ui_Dialog):
     def __init__(self):
@@ -350,6 +501,14 @@ class TechUser(QMainWindow, TechUserWindow.Ui_MainWindow):
 
     def refresh_car_table(self):
         self.cars()
+        if self.supp_contr_box.currentText() == "Поставщики":
+            self.suppliers()
+        if self.supp_contr_box.currentText() == "Контракты":
+            self.contracts()
+        if self.work_serv_box.currentText() == "Мастерские":
+            self.workshops()
+        if self.work_serv_box.currentText() == "Тех. обслуживание":
+            self.technical_service()
 
     def refresh_table(self, table):
         if table == "Поставщики":
@@ -1409,24 +1568,39 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
                 )
             connection.set_client_encoding("WIN1251")
             cur = connection.cursor()
-            try:
-                cur.execute(f"INSERT INTO clients (lgn, drv_lic, passport, full_name, phone) VALUES ('{lgn}', '{drv_lic}', '{passport}', '{full_name}', '{phone}')")
-                cur.execute(f"CREATE USER \"{lgn}\" WITH ENCRYPTED PASSWORD '{pwd}' IN GROUP \"Client\"")
-                reject = QMessageBox()
-                reject.setWindowTitle("Сообщение")
-                reject.setText("Пользователь успешно зарегистрирован!")
-                reject.setStandardButtons(QMessageBox.Ok)
-                connection.commit()
-                reject.exec_()
-                old_window.close()
-            except Exception as ex:
+            logins = []
+            cur.execute("SELECT lgn FROM clients")
+            for el in cur.fetchall():
+                logins.append(str(el[0]))
+            check_login = True
+            for el in logins:
+                if lgn == el:
+                    check_login = False
+            if check_login == True:
+                try:
+                    cur.execute(f"INSERT INTO clients (lgn, drv_lic, passport, full_name, phone) VALUES ('{lgn}', '{drv_lic}', '{passport}', '{full_name}', '{phone}')")
+                    cur.execute(f"CREATE USER \"{lgn}\" WITH ENCRYPTED PASSWORD '{pwd}' IN GROUP \"Client\"")
                     reject = QMessageBox()
-                    reject.setWindowTitle("Ошибка")
-                    reject.setText("Проверьте введённые данные!")
+                    reject.setWindowTitle("Сообщение")
+                    reject.setText("Пользователь успешно зарегистрирован!")
                     reject.setStandardButtons(QMessageBox.Ok)
-                    reject.exec_()
-            finally:
                     connection.commit()
+                    reject.exec_()
+                    old_window.close()
+                except Exception as ex:
+                        reject = QMessageBox()
+                        reject.setWindowTitle("Ошибка")
+                        reject.setText("Проверьте введённые данные!")
+                        reject.setStandardButtons(QMessageBox.Ok)
+                        reject.exec_()
+                finally:
+                        connection.commit()
+            else:
+                reject = QMessageBox()
+                reject.setWindowTitle("Ошибка")
+                reject.setText("Пользователь с данным логином уже существует!")
+                reject.setStandardButtons(QMessageBox.Ok)
+                reject.exec_()
             del(cur, connection)
 
     def login(self, lgn, pwd):
@@ -1437,6 +1611,8 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             database="CarsharingDB",
             user = lgn,
             password = pwd
+            # user="postgres",
+            # password="QSXFtrew16912"
             # user="Johand",
             # password="5T7BRYYMSO"
             # user="Qwardley",
@@ -1446,6 +1622,7 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             cur = connection.cursor()
             connection.commit()
             login = lgn
+            # login = "postgres"
             print(login)
             self.close()
         except Exception as ex:
@@ -1456,10 +1633,10 @@ class Login(QDialog, LoginWindow.Ui_LoginWindow):
             reject.exec_()
 
     def role(self):
-        global role, cur, connection
+        global role, cur, connection, login
         resolver = ["Client", "TechUser", "postgres"]
         for el in resolver:
-            cur.execute(f"select * from pg_has_role('{el}', 'member')")
+            cur.execute(f"select * from pg_has_role('{login}', '{el}', 'member')")
             for eli in cur.fetchall():
                 for inner_el in eli:
                     if inner_el:
@@ -1494,5 +1671,7 @@ elif role == "TechUser":
     app.exec_()
     print("Роль установлена!")
 elif role == "postgres":
-    connection.commit()
+    main_window = Admin()
+    main_window.show()
+    app.exec_()
     print("Роль установлена!")

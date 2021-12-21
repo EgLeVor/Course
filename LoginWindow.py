@@ -14,7 +14,34 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):
         LoginWindow.setObjectName("LoginWindow")
-        LoginWindow.resize(401, 300)
+        LoginWindow.resize(401, 359)
+        LoginWindow.setStyleSheet("QPushButton{\n"
+"    \n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QPushButton#exit_btn{\n"
+"    \n"
+"    background-color: rgb(209, 0, 0);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"\n"
+"}\n"
+"QDialog{\n"
+"\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QLabel{\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    \n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"")
         self.main_lbl = QtWidgets.QLabel(LoginWindow)
         self.main_lbl.setGeometry(QtCore.QRect(150, 0, 91, 81))
         font = QtGui.QFont()
@@ -40,13 +67,13 @@ class Ui_LoginWindow(object):
         self.pwd_line.setGeometry(QtCore.QRect(30, 190, 341, 31))
         self.pwd_line.setObjectName("pwd_line")
         self.reg_btn = QtWidgets.QPushButton(LoginWindow)
-        self.reg_btn.setGeometry(QtCore.QRect(30, 27, 101, 41))
+        self.reg_btn.setGeometry(QtCore.QRect(30, 240, 111, 41))
         self.reg_btn.setObjectName("reg_btn")
         self.lgn_btn = QtWidgets.QPushButton(LoginWindow)
-        self.lgn_btn.setGeometry(QtCore.QRect(30, 230, 93, 41))
+        self.lgn_btn.setGeometry(QtCore.QRect(160, 240, 211, 41))
         self.lgn_btn.setObjectName("lgn_btn")
         self.exit_btn = QtWidgets.QPushButton(LoginWindow)
-        self.exit_btn.setGeometry(QtCore.QRect(140, 230, 231, 41))
+        self.exit_btn.setGeometry(QtCore.QRect(30, 300, 341, 41))
         self.exit_btn.setObjectName("exit_btn")
 
         self.retranslateUi(LoginWindow)

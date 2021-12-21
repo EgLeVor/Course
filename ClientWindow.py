@@ -14,12 +14,57 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(721, 469)
-        MainWindow.setStyleSheet("")
+        MainWindow.resize(806, 696)
+        MainWindow.setStyleSheet("QWidget{\n"
+"\n"
+"    background-color: rgb(44, 44, 64);\n"
+"}\n"
+"QPushButton{\n"
+"    \n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    background-color: rgb(170, 170, 255);\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-weight: bold\n"
+"}\n"
+"QPushButton#delete_btn{\n"
+"    \n"
+"    background-color: rgb(209, 0, 0);\n"
+"    font: 75 9pt \"MS Shell Dlg 2\";\n"
+"    font-weight: bold\n"
+"\n"
+"}\n"
+"QLabel{\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    border-top-color: rgba(255, 255, 255, 0);\n"
+"    border-right-color: rgba(255, 255, 255, 0);\n"
+"    border-left-color: rgba(255, 255, 255, 0);\n"
+"    background-color: rgb(50, 50, 64);\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QLabel#inf_lbl{\n"
+"    \n"
+"    font-weight: bold\n"
+"}\n"
+"QComboBox{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"\n"
+"    color: rgb(255, 255, 255);\n"
+"}"
+"QTableWidget{\n"
+"    background-color: rgb(50, 50, 64);\n"
+"\n"
+"    color: rgb(255, 255, 255);\n"
+"}"
+)
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(10, 10, 691, 192))
+        self.tableWidget.setGeometry(QtCore.QRect(10, 10, 791, 192))
         self.tableWidget.setStyleSheet("")
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(4)
@@ -45,31 +90,32 @@ class Ui_MainWindow(object):
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(3, item)
         self.passport_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.passport_lbl.setGeometry(QtCore.QRect(460, 350, 171, 21))
+        self.passport_lbl.setGeometry(QtCore.QRect(520, 540, 281, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.passport_lbl.setFont(font)
         self.passport_lbl.setObjectName("passport_lbl")
         self.phone_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.phone_lbl.setGeometry(QtCore.QRect(460, 300, 161, 21))
+        self.phone_lbl.setGeometry(QtCore.QRect(520, 460, 281, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.phone_lbl.setFont(font)
         self.phone_lbl.setObjectName("phone_lbl")
         self.update_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.update_btn.setGeometry(QtCore.QRect(460, 410, 241, 41))
+        self.update_btn.setGeometry(QtCore.QRect(520, 630, 281, 41))
         self.update_btn.setObjectName("update_btn")
         self.phone_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.phone_line.setGeometry(QtCore.QRect(460, 320, 241, 22))
+        self.phone_line.setGeometry(QtCore.QRect(520, 490, 281, 31))
         self.phone_line.setObjectName("phone_line")
         self.passport_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.passport_line.setGeometry(QtCore.QRect(460, 380, 241, 22))
+        self.passport_line.setGeometry(QtCore.QRect(520, 570, 281, 31))
         self.passport_line.setObjectName("passport_line")
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(10, 220, 141, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.comboBox.setFont(font)
+        self.comboBox.setFrame(False)
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
@@ -80,25 +126,28 @@ class Ui_MainWindow(object):
         self.insert_btn.setGeometry(QtCore.QRect(220, 260, 201, 41))
         self.insert_btn.setObjectName("insert_btn")
         self.name_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.name_lbl.setGeometry(QtCore.QRect(460, 250, 161, 21))
+        self.name_lbl.setGeometry(QtCore.QRect(520, 380, 281, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.name_lbl.setFont(font)
         self.name_lbl.setObjectName("name_lbl")
         self.name_line = QtWidgets.QLineEdit(self.centralwidget)
-        self.name_line.setGeometry(QtCore.QRect(460, 270, 241, 22))
+        self.name_line.setGeometry(QtCore.QRect(520, 410, 281, 31))
         self.name_line.setObjectName("name_line")
         self.inf_lbl = QtWidgets.QLabel(self.centralwidget)
-        self.inf_lbl.setGeometry(QtCore.QRect(460, 210, 211, 31))
+        self.inf_lbl.setGeometry(QtCore.QRect(520, 330, 281, 31))
         font = QtGui.QFont()
         font.setPointSize(9)
+        font.setBold(True)
+        font.setWeight(75)
         self.inf_lbl.setFont(font)
         self.inf_lbl.setObjectName("inf_lbl")
         self.find_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.find_btn.setGeometry(QtCore.QRect(10, 360, 411, 41))
+        self.find_btn.setGeometry(QtCore.QRect(10, 380, 411, 41))
         self.find_btn.setObjectName("find_btn")
         self.brand_line = QtWidgets.QLineEdit(self.centralwidget)
         self.brand_line.setGeometry(QtCore.QRect(150, 320, 271, 31))
+        self.brand_line.setFrame(True)
         self.brand_line.setObjectName("brand_line")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(20, 320, 121, 31))
@@ -107,7 +156,7 @@ class Ui_MainWindow(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.delete_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.delete_btn.setGeometry(QtCore.QRect(10, 410, 411, 41))
+        self.delete_btn.setGeometry(QtCore.QRect(10, 440, 411, 41))
         self.delete_btn.setObjectName("delete_btn")
         MainWindow.setCentralWidget(self.centralwidget)
 
