@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>401</width>
-    <height>359</height>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,7 @@
 	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
 	background-color: rgb(170, 170, 255);
 	color: rgb(255, 255, 255);
+	font-weight: bold
 }
 QPushButton#exit_btn{
 	
@@ -64,7 +65,7 @@ QLineEdit{
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>80</y>
+     <y>90</y>
      <width>131</width>
      <height>16</height>
     </rect>
@@ -82,7 +83,7 @@ QLineEdit{
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>110</y>
+     <y>120</y>
      <width>341</width>
      <height>31</height>
     </rect>
@@ -92,7 +93,7 @@ QLineEdit{
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>160</y>
+     <y>170</y>
      <width>131</width>
      <height>16</height>
     </rect>
@@ -110,7 +111,7 @@ QLineEdit{
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>190</y>
+     <y>200</y>
      <width>341</width>
      <height>31</height>
     </rect>
@@ -120,8 +121,8 @@ QLineEdit{
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>240</y>
-     <width>111</width>
+     <y>260</y>
+     <width>121</width>
      <height>41</height>
     </rect>
    </property>
@@ -132,9 +133,9 @@ QLineEdit{
   <widget class="QPushButton" name="lgn_btn">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>240</y>
-     <width>211</width>
+     <x>170</x>
+     <y>260</y>
+     <width>201</width>
      <height>41</height>
     </rect>
    </property>
@@ -146,7 +147,7 @@ QLineEdit{
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>300</y>
+     <y>320</y>
      <width>341</width>
      <height>41</height>
     </rect>
