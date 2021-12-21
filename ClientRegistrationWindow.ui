@@ -37,7 +37,10 @@ QLabel{
 	color: rgb(255, 255, 255);
 }
 QLineEdit{
-	
+	border: 1px solid rgb(255, 255, 255);
+	border-top-color: rgba(255, 255, 255, 0);
+	border-right-color: rgba(255, 255, 255, 0);
+	border-left-color: rgba(255, 255, 255, 0);
 	background-color: rgb(50, 50, 64);
 	color: rgb(255, 255, 255);
 }</string>
