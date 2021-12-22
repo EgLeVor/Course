@@ -50,6 +50,12 @@ QComboBox{
 }
 QTableWidget{
 	color:rgb(255, 255, 255);
+}
+QHeaderView::section {
+   
+	background-color: rgb(44, 44, 64);
+    color: white;
+    border: 1px solid #6c6c6c;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -160,7 +166,7 @@ QTableWidget{
       </color>
      </property>
      <property name="foreground">
-      <brush brushstyle="NoBrush">
+      <brush brushstyle="SolidPattern">
        <color alpha="255">
         <red>255</red>
         <green>255</green>

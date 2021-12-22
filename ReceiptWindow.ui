@@ -50,6 +50,12 @@ QComboBox{
 }
 QTableWidget{
 	color:rgb(255, 255, 255);
+}
+QHeaderView::section {
+   
+	background-color: rgb(44, 44, 64);
+    color: white;
+    border: 1px solid #6c6c6c;
 }</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
